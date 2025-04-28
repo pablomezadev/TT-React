@@ -40,3 +40,21 @@
 .read-the-docs {
   color: #888;
 }
+
+/*uno por fila*/
+/* #promociones {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem; /* Espacio entre tarjetas */
+  /*padding: 2rem;
+} 
+*/
+
+/* flexible*/
+#promociones{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem; /* Espacio entre tarjetas */
+  padding: 2rem;
+}
