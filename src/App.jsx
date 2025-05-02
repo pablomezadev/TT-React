@@ -4,6 +4,11 @@ import Saludo2 from './components/Saludo'
 import Botones from './components/Botones'
 import ListaDeProductos from './components/ListaDeProductos'
 import Tarjeta from './components/Tarjetas'
+import Header from './components/Header'
+import Nav from './components/Nav'
+import Main from './components/Main'
+import Gallery from './components/Gallery'
+import Footer from './components/Footer'
 
 function Saludo(){
   return(
@@ -64,7 +69,7 @@ function App() {
 
   return (
     <>
-      <Saludo/>
+      {/* <Saludo/>
       <Saludo2 nombre='juan' edad='25'/>
       <Botones texto='Aceptar' color='blue'/>
       <Botones texto='Cancelar' color='red'/>
@@ -82,8 +87,12 @@ function App() {
           /> 
         )
         }
-      </div>
-
+      </div> */}
+    <Header/>
+    <Nav/>
+    <Main/>
+    <Gallery/>
+    <Footer/>
     </>
   )
 }
