@@ -1,0 +1,22 @@
+export const productList = [
+    { id: 1, nombre: "Remera", precio: 20.5, imagenUrl: "https://placehold.co/100x100?text=Remera" },
+    { id: 2, nombre: "Pantalón", precio: 35, imagenUrl: "https://placehold.co/100x100?text=Pantalon" },
+    { id: 3, nombre: "Zapatillas", precio: 50, imagenUrl: "https://placehold.co/100x100?text=Zapatillas" },
+    { id: 4, nombre: "Gorra", precio: 15, imagenUrl: "https://placehold.co/100x100?text=Gorra" },
+    { id: 5, nombre: "Bufanda", precio: 10, imagenUrl: "https://placehold.co/100x100?text=Bufanda" },
+    { id: 6, nombre: "Campera", precio: 60, imagenUrl: "https://placehold.co/100x100?text=Campera" },
+    { id: 7, nombre: "Short", precio: 25, imagenUrl: "https://placehold.co/100x100?text=Short" },
+    { id: 8, nombre: "Ojotas", precio: 18, imagenUrl: "https://placehold.co/100x100?text=Ojotas" },
+    { id: 9, nombre: "Buzo", precio: 40, imagenUrl: "https://placehold.co/100x100?text=Buzo" },
+    { id: 10, nombre: "Medias", precio: 5, imagenUrl: "https://placehold.co/100x100?text=Medias" },
+    { id: 11, nombre: "Cinturón", precio: 12, imagenUrl: "https://placehold.co/100x100?text=Cinturon" },
+    { id: 12, nombre: "Lentes de sol", precio: 30, imagenUrl: "https://placehold.co/100x100?text=Lentes" },
+    { id: 13, nombre: "Reloj", precio: 100, imagenUrl: "https://placehold.co/100x100?text=Reloj" },
+    { id: 14, nombre: "Piloto", precio: 65, imagenUrl: "https://placehold.co/100x100?text=Piloto" },
+    { id: 15, nombre: "Sombrero", precio: 22, imagenUrl: "https://placehold.co/100x100?text=Sombrero" },
+    { id: 16, nombre: "Botas", precio: 80, imagenUrl: "https://placehold.co/100x100?text=Botas" },
+    { id: 17, nombre: "Saco", precio: 120, imagenUrl: "https://placehold.co/100x100?text=Saco" },
+    { id: 18, nombre: "Vestido", precio: 70, imagenUrl: "https://placehold.co/100x100?text=Vestido" },
+    { id: 19, nombre: "Pollera", precio: 30, imagenUrl: "https://placehold.co/100x100?text=Pollera" },
+    { id: 20, nombre: "Musculosa", precio: 15, imagenUrl: "https://placehold.co/100x100?text=Musculosa" }
+  ];
