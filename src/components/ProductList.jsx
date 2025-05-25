@@ -1,0 +1,1 @@
+/* ProductList - componente encargado de reproducir los productos */
