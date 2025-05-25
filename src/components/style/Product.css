@@ -47,3 +47,32 @@
   .product-card button:hover {
     background-color: #0056b3;
   }  
+
+  .cantidad-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+    gap: 10px;
+  }
+  
+  .cantidad-control button {
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: #007bff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .cantidad-control span {
+    min-width: 20px;
+    text-align: center;
+    font-weight: bold;
+  }
+  

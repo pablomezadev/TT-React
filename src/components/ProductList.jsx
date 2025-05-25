@@ -4,6 +4,8 @@ import './style/ProductList.css'
 
 const ProductList = ({ products, addToCart, borrarUnProducto }) => {
     return (
+        <div className='lista-productos'>
+        <h1>Lista de productos</h1>
         <div className="product-grid">
             {
                 products.map((prod, index) => (
@@ -15,6 +17,7 @@ const ProductList = ({ products, addToCart, borrarUnProducto }) => {
                     />
                 ))
             }
+        </div>
         </div>
     )
 }
