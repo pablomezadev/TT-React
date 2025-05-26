@@ -1,10 +1,22 @@
 import React from 'react'
+import Header from '../components/estaticos/Header'
+import Footer from '../components/estaticos/Footer'
+import ProductList from '../components/ProductList'
+import Loading from '../pages/Loading'
 
-function Home() {
+function Home({ cart, productos, cargando }) {
   return (
-    <div>
+    <>
+      <Header cartItems={cart}/>
       <h1>Home</h1>
-    </div>
+      <p>descripcion de productos</p>
+      <p>Bienvenido a nuestra tienda online. Aquí encontrarás una variedad de productos de alta calidad.</p>
+      {
+        cargando?<Loading/>:
+        <ProductList productos={productos}/>
+      }
+      <Footer />
+    </>
   )
 }
 

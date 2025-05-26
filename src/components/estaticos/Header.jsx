@@ -1,8 +1,11 @@
-import React from 'react'
+import React,{useState} from 'react'
 import {Link} from 'react-router-dom'
+import './styleEstaticos.css'  
+import Cart from '../Cart'
 
-function Header() {
-  return (
+function Header({cartItems}) {
+    const [isCartOpen, setIsCartOpen] = useState(false);
+    return (
     <header>
         <nav>
             <ul>
@@ -10,6 +13,12 @@ function Header() {
                 <li><Link to='/acercade'>Sobre nosotros</Link></li>
                 <li><Link to='/productos'>Galeria de productos</Link></li>
                 <li><Link to='/contacto'>Contacto</Link></li>
+                <li>
+                    <button onClick={() => setIsCartOpen(true)} >
+                        <i className={`fa-solid fa-cart-shopping ${isCartOpen ? 'open' : 'close'}`}></i>
+                    </button>
+                    <Cart cartItems={cartItems} isCartOpen={isCartOpen} onClose={()=>setIsCartOpen(false)}/>
+                </li>
             </ul>
         </nav>
     </header>
