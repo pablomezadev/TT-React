@@ -1,13 +1,17 @@
 import React from 'react'
+import Header from '../components/estaticos/Header'
+import Footer from '../components/estaticos/Footer'
 
-function Contactos() {
+function Contactos({cart}) {
   return (
-    <div>
+    <>
+      <Header cartItems={cart}/>
         <h1>Contactos</h1>
         <p>
           Para consultas, envíanos un correo a:
         </p>
-    </div>
+        <Footer/>
+    </>
   )
 }
 

@@ -1,0 +1,185 @@
+section {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 1rem;
+  width: 260px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  transition: transform 0.2s ease;
+}
+
+section:hover {
+  transform: scale(1.02);
+}
+
+/* Imagen destacada */
+.imgContainer {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 10px;
+  background-color: #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imgContainer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.imgContainer img:hover {
+  border-color: #2b2b2b;
+  transform: scale(1.09);
+  -webkit-transform: scale(1.09);
+  -moz-transform: scale(1.09);
+  -ms-transform: scale(1.09);
+  -o-transform: scale(1.09);
+}
+
+/* Título del producto */
+.nombre {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  margin: 0;
+}
+
+/* Precio y stock */
+.precio,
+.stock {
+  font-size: 0.95rem;
+  margin: 0;
+  padding: 0.2rem 0;
+  text-align: center;
+  width: 100%;
+}
+
+.precio {
+  color: #2b2b2b;
+  font-weight: bold;
+  background-color: #eaeaea;
+  border-radius: 4px;
+}
+
+.stock {
+  color: #555;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+}
+
+/* Controles de cantidad */
+.cantidadContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.cantidadContainer .qtyButton {
+  all: unset; /* Esto borra todos los estilos por defecto del navegador */
+  background-color: #909090;
+  color: #fff;
+  padding: 0.4rem 0.9rem;
+  margin: 0 0.3rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.25s ease;
+}
+
+.cantidadContainer .qtyButton:hover {
+  background-color: #5a5a5a;
+}
+
+.cantidadContainer span {
+  min-width: 20px;
+  text-align: center;
+}
+
+/* Botón agregar al carrito */
+button:last-of-type {
+  background-color: #909090;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: auto;
+}
+
+button:last-of-type:hover {
+  background-color: #333;
+}
+
+/* 📱 Teléfonos pequeños (hasta 480px) */
+@media (max-width: 480px) {
+  section {
+    width: 100%;
+    padding: 0.8rem;
+  }
+
+  .imgContainer {
+    height: 160px;
+  }
+
+  .nombre {
+    font-size: 1rem;
+  }
+
+  .precio,
+  .stock {
+    font-size: 0.9rem;
+  }
+
+  .qtyButton {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.9rem;
+  }
+
+  button:last-of-type {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* 📱📲 Teléfonos grandes / tablets (481px a 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  section {
+    width: 100%;
+  }
+
+  .imgContainer {
+    height: 180px;
+  }
+
+  .nombre {
+    font-size: 1.05rem;
+  }
+
+  .precio,
+  .stock {
+    font-size: 0.95rem;
+  }
+}
+
+/* 💻 Pantallas grandes (más de 768px) */
+@media (min-width: 769px) {
+  section {
+    width: 260px;
+  }
+
+  .imgContainer {
+    height: 200px;
+  }
+}
