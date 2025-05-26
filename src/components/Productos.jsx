@@ -1,8 +1,15 @@
 /** Product */
-import React from 'react'
+import React, {useState} from 'react'
 import './styleProductos.css'
 
-const Productos = ({producto}) => {
+const Productos = ({producto, agregarCarrito}) => {
+
+    const [cantidad, setCantidad] = useState(1);
+
+    const increase = ()=>setCantidad(prev=> (prev < producto.stock ? prev + 1 : prev));
+    const decrease = ()=>setCantidad(prev=> (prev > 1 ? prev - 1 : prev));
+
+
   return (
     <section>
         <div className='imgContainer'>
@@ -13,11 +20,11 @@ const Productos = ({producto}) => {
         <p className='stock'>stock: {producto.stock}</p>
         
         <div className='cantidadContainer'>
-            <button className='qtyButton'>-</button>
-            <span></span>
-            <button className='qtyButton'>+</button>
+            <button className='qtyButton' onClick={decrease}>-</button>
+            <span>{cantidad}</span>
+            <button className='qtyButton' onClick={increase}>+</button>
         </div>
-        <button >Agregar al carrito</button>
+        <button onClick={()=>agregarCarrito(producto)}>Agregar al carrito</button>
     </section>
   )
 }
