@@ -1,7 +1,7 @@
 import React from 'react'
 import './styles/styleCart.css'
 
-function Cart({cartItems, isCartOpen, onClose}) {
+function Cart({cartItems, isCartOpen, onClose, borrarProducto}) {
     const estilos = { listStyle: 'none' }
     const visibilidadCarrito = isCartOpen ? 'open' : 'close'
     // console.log(`cantidad de productos: ${cartItems.length}`)
@@ -20,8 +20,8 @@ function Cart({cartItems, isCartOpen, onClose}) {
                             {
                                 cartItems.map((item, index) => (
                                     <>
-                                        <li key={index}>{item.nombre} - ${item.precio} - cant: {item.stock}
-                                            <button onClick={() => borrarUnProducto(item)}><li className='fa-solid fa-trash'></li>
+                                        <li key={item.id}>{item.nombre} - ${item.precio} - cant: {item.stock}
+                                            <button onClick={() => borrarProducto(item)}> <li className='fa-solid fa-trash'></li>
                                             </button>
                                         </li>
                                     </>

@@ -4,16 +4,16 @@ import Footer from '../components/estaticos/Footer'
 import ProductList from '../components/ProductList'
 import Loading from '../pages/Loading'
 
-function Home({ cart, productos, cargando }) {
+function Home({ cart, productos, cargando, agregarCarrito, borrarProducto }) {
   return (
     <>
-      <Header cartItems={cart}/>
+      <Header cartItems={cart} borrarProducto={borrarProducto}/>
       <h1>Home</h1>
       <p>descripcion de productos</p>
       <p>Bienvenido a nuestra tienda online. Aquí encontrarás una variedad de productos de alta calidad.</p>
       {
         cargando?<Loading/>:
-        <ProductList productos={productos}/>
+        <ProductList productos={productos} agregarCarrito={agregarCarrito} borrarProducto={borrarProducto}/>
       }
       <Footer />
     </>

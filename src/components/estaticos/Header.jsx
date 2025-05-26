@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import './styleEstaticos.css'  
 import Cart from '../Cart'
 
-function Header({cartItems}) {
+function Header({cartItems, borrarProducto}) {
     const [isCartOpen, setIsCartOpen] = useState(false);
     return (
     <header>
@@ -15,9 +15,9 @@ function Header({cartItems}) {
                 <li><Link to='/contacto'>Contacto</Link></li>
                 <li>
                     <button onClick={() => setIsCartOpen(true)} >
-                        <i className={`fa-solid fa-cart-shopping ${isCartOpen ? 'open' : 'close'}`}></i>
+                        <i className={`fa-solid fa-cart-shopping ${isCartOpen ? 'open' : 'close'}`}> {cartItems.length}</i>
                     </button>
-                    <Cart cartItems={cartItems} isCartOpen={isCartOpen} onClose={()=>setIsCartOpen(false)}/>
+                    <Cart borrarProducto={borrarProducto} cartItems={cartItems} isCartOpen={isCartOpen} onClose={()=>setIsCartOpen(false)}/>
                 </li>
             </ul>
         </nav>
