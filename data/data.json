@@ -1,0 +1,22 @@
+[
+  { "id": 1, "nombre": "Remera", "precio": 20.5, "imagen": "https://placehold.co/100x100?text=Remera", "stock": 50 },
+  { "id": 2, "nombre": "Pantalón", "precio": 35, "imagen": "https://placehold.co/100x100?text=Pantalon", "stock": 30 },
+  { "id": 3, "nombre": "Zapatillas", "precio": 50, "imagen": "https://placehold.co/100x100?text=Zapatillas", "stock": 20 },
+  { "id": 4, "nombre": "Gorra", "precio": 15, "imagen": "https://placehold.co/100x100?text=Gorra", "stock": 40 },
+  { "id": 5, "nombre": "Bufanda", "precio": 10, "imagen": "https://placehold.co/100x100?text=Bufanda", "stock": 60 },
+  { "id": 6, "nombre": "Campera", "precio": 60, "imagen": "https://placehold.co/100x100?text=Campera", "stock": 15 },
+  { "id": 7, "nombre": "Short", "precio": 25, "imagen": "https://placehold.co/100x100?text=Short", "stock": 35 },
+  { "id": 8, "nombre": "Ojotas", "precio": 18, "imagen": "https://placehold.co/100x100?text=Ojotas", "stock": 45 },
+  { "id": 9, "nombre": "Buzo", "precio": 40, "imagen": "https://placehold.co/100x100?text=Buzo", "stock": 25 },
+  { "id": 10, "nombre": "Medias", "precio": 5, "imagen": "https://placehold.co/100x100?text=Medias", "stock": 100 },
+  { "id": 11, "nombre": "Cinturón", "precio": 12, "imagen": "https://placehold.co/100x100?text=Cinturon", "stock": 28 },
+  { "id": 12, "nombre": "Lentes de sol", "precio": 30, "imagen": "https://placehold.co/100x100?text=Lentes", "stock": 18 },
+  { "id": 13, "nombre": "Reloj", "precio": 100, "imagen": "https://placehold.co/100x100?text=Reloj", "stock": 10 },
+  { "id": 14, "nombre": "Piloto", "precio": 65, "imagen": "https://placehold.co/100x100?text=Piloto", "stock": 12 },
+  { "id": 15, "nombre": "Sombrero", "precio": 22, "imagen": "https://placehold.co/100x100?text=Sombrero", "stock": 26 },
+  { "id": 16, "nombre": "Botas", "precio": 80, "imagen": "https://placehold.co/100x100?text=Botas", "stock": 14 },
+  { "id": 17, "nombre": "Saco", "precio": 120, "imagen": "https://placehold.co/100x100?text=Saco", "stock": 9 },
+  { "id": 18, "nombre": "Vestido", "precio": 70, "imagen": "https://placehold.co/100x100?text=Vestido", "stock": 22 },
+  { "id": 19, "nombre": "Pollera", "precio": 30, "imagen": "https://placehold.co/100x100?text=Pollera", "stock": 19 },
+  { "id": 20, "nombre": "Musculosa", "precio": 15, "imagen": "https://placehold.co/100x100?text=Musculosa", "stock": 38 }
+]
