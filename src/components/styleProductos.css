@@ -45,7 +45,7 @@ section:hover {
 }
 
 /* Título del producto */
-.nombre {
+.name {
   font-size: 1.1rem;
   font-weight: 600;
   color: #333;
@@ -54,7 +54,7 @@ section:hover {
 }
 
 /* Precio y stock */
-.precio,
+.price,
 .stock {
   font-size: 0.95rem;
   margin: 0;
@@ -63,7 +63,7 @@ section:hover {
   width: 100%;
 }
 
-.precio {
+.price {
   color: #2b2b2b;
   font-weight: bold;
   background-color: #eaeaea;
@@ -133,11 +133,11 @@ button:last-of-type:hover {
     height: 160px;
   }
 
-  .nombre {
+  .name {
     font-size: 1rem;
   }
 
-  .precio,
+  .price,
   .stock {
     font-size: 0.9rem;
   }
@@ -163,11 +163,11 @@ button:last-of-type:hover {
     height: 180px;
   }
 
-  .nombre {
+  .name {
     font-size: 1.05rem;
   }
 
-  .precio,
+  .price,
   .stock {
     font-size: 0.95rem;
   }

@@ -15,7 +15,8 @@ function App() {
 
 
   useEffect(() => {
-    fetch('/data/data.json')
+    // fetch('https://api.escuelajs.co/api/v1/products')
+    fetch('https://fakestoreapi.com/products')
       .then(respuesta => respuesta.json())
       //logica para manejar los datos
       .then(datos => {
@@ -32,6 +33,7 @@ function App() {
   }, [])
 
   console.log(productos);
+  // console.log("imagenes: "+productos.map(producto => producto.images[0]));
 
   const handleAddToCart = (product) => {
     const productInCart = cart.find(item => item.id === product.id);
@@ -61,14 +63,18 @@ function App() {
     });
   };
 
+const handleVaciarCarrito = () => {
+  setCart([]) // esto sí vacía correctamente el carrito
+}
+
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Home borrarProducto={handleDeleteFromCart} agregarCarrito={handleAddToCart} cart={cart} productos={productos} cargando={cargando} />} />
+        <Route path='/' element={<Home borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} agregarCarrito={handleAddToCart} cart={cart} productos={productos} cargando={cargando} />} />
 
-        <Route path='/acercade' element={<AcercaDe borrarProducto={handleDeleteFromCart} cart={cart} />} />
-        <Route path='/productos' element={<GaleriaDeProductos borrarProducto={handleDeleteFromCart} agregarCarrito={handleAddToCart} cart={cart} productos={productos} cargando={cargando} />} />
-        <Route path='/contacto' element={<Contacto borrarProducto={handleDeleteFromCart} cart={cart} />} />
+        <Route path='/acercade' element={<AcercaDe borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} cart={cart} />} />
+        <Route path='/productos' element={<GaleriaDeProductos borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} agregarCarrito={handleAddToCart} cart={cart} productos={productos} cargando={cargando} />} />
+        <Route path='/contacto' element={<Contacto borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} cart={cart} />} />
         <Route path='/*' element={<NotFound />} />
       </Routes>
     </Router>

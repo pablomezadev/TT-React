@@ -5,19 +5,17 @@ import './styleProductos.css'
 const Productos = ({producto, agregarCarrito}) => {
 
     const [cantidad, setCantidad] = useState(1);
-
-    const increase = ()=>setCantidad(prev=> (prev < producto.stock ? prev + 1 : prev));
+    const increase = ()=>setCantidad(prev=> (prev < producto.rating.count ? prev + 1 : prev));
     const decrease = ()=>setCantidad(prev=> (prev > 1 ? prev - 1 : prev));
-
 
   return (
     <section>
         <div className='imgContainer'>
-            <img src={producto.imagen} alt={producto.nombre} />
+            <img src={producto.image} alt={producto.title} />
         </div>
-        <h3 className='nombre'>{producto.nombre}</h3>
-        <p className='precio'>$: {producto.precio}</p>
-        <p className='stock'>stock: {producto.stock}</p>
+        <h3 className='nombre'>{producto.title}</h3>
+        <p className='precio'>$: {producto.price}</p>
+        <p className='stock'>stock: {producto.rating.count}</p>
         
         <div className='cantidadContainer'>
             <button className='qtyButton' onClick={decrease}>-</button>

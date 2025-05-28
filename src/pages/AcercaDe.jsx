@@ -2,10 +2,10 @@ import React from 'react'
 import Header from '../components/estaticos/Header'
 import Footer from '../components/estaticos/Footer'
 
-function AcercaDe({cart, borrarProducto}) {
+function AcercaDe({cart, borrarProducto, vaciarCarrito}) {
   return (
     <>
-      <Header cartItems={cart} borrarProducto={borrarProducto}/>
+      <Header cartItems={cart} borrarProducto={borrarProducto} vaciarCarrito={vaciarCarrito}/>
       <h1>Acerca de</h1>
       <p>Esta es una tienda de productos de prueba.</p>
       <p>Desarrollada por [Tu Nombre] en [Fecha].</p>
