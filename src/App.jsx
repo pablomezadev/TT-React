@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import './App.css'
 import Home from './pages/Home'
 import AcercaDe from './pages/AcercaDe'
@@ -68,16 +68,16 @@ const handleVaciarCarrito = () => {
 }
 
   return (
-    <Router>
+    <>
       <Routes>
-        <Route path='/' element={<Home borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} agregarCarrito={handleAddToCart} cart={cart} productos={productos} cargando={cargando} />} />
+        <Route path='/' element={<Home borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} agregarCarrito={handleAddToCart} cart={cart} productos={productos} cargando={cargando} error={error}/>} />
 
         <Route path='/acercade' element={<AcercaDe borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} cart={cart} />} />
         <Route path='/productos' element={<GaleriaDeProductos borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} agregarCarrito={handleAddToCart} cart={cart} productos={productos} cargando={cargando} />} />
         <Route path='/contacto' element={<Contacto borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} cart={cart} />} />
         <Route path='/*' element={<NotFound />} />
       </Routes>
-    </Router>
+    </>
   )
 }
 
