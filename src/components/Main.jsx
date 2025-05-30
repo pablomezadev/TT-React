@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Main = ({data}) => {
+const Main = ({productos, carga}) => {
     // console.log(data);
     const estilos =  {
         maxWidth: '1200px',
