@@ -4,7 +4,7 @@ import logo from '../assets/react.svg'
 import Cart from './Cart'
 import { Link } from 'react-router-dom'
 
-const Nav = ({countItem, borrarUnProducto, vaciarCarrito, isCartOpen, setCartOpen}) => {
+const Nav = ({countItem, borrarUnProducto, vaciarCarrito, isCartOpen, setCartOpen, precioTotal}) => {
     const estilosUl = {listStyle:'none',display:'flex',margin:'0',alignItems:'center',justifyContent:'space-around'}
   return (
     // pasamos los estilos directamente como propiedad usando: {{}}
@@ -17,7 +17,7 @@ const Nav = ({countItem, borrarUnProducto, vaciarCarrito, isCartOpen, setCartOpe
             {/* <li className="fa-solid fa-cart-shopping" > {countItem.length} </li> */}
             <li>
                 <button className='btnCart' onClick={() => setCartOpen(true)}><i className="fa-solid fa-cart-shopping"> {countItem.length}</i></button>
-                <Cart cartItems={countItem} borrarUnProducto={borrarUnProducto} vaciarCarrito={vaciarCarrito}isCartOpen={isCartOpen} onClose={() => setCartOpen(false)}/> 
+                <Cart precioTotal={precioTotal}cartItems={countItem} borrarUnProducto={borrarUnProducto} vaciarCarrito={vaciarCarrito}isCartOpen={isCartOpen} onClose={() => setCartOpen(false)}/> 
             </li> 
         </ul>
     </nav>

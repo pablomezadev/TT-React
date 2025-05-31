@@ -11,22 +11,23 @@ import Cart from '../components/Cart'
 import loading from '../assets/loading.gif'
 import NotFound from '../components/NotFound'
 
-const Home = ({error, cargando,productos,cart, handleAddToCart, borrarUnProducto,vaciarCarrito, isCartOpen, setCartOpen}) => {
+const Home = ({ error, cargando, productos, cart, handleAddToCart, borrarUnProducto, vaciarCarrito, isCartOpen, setCartOpen, precioTotal }) => {
     const countItem = cart
 
-    if(error){
-        return<NotFound/>
+    if (error) {
+        return <NotFound />
     }
 
     return (
         <>
             <Header />
-            <Nav countItem={countItem} borrarUnProducto={borrarUnProducto} vaciarCarrito={vaciarCarrito} isCartOpen={isCartOpen} setCartOpen={setCartOpen}/>
-            <Main productos={productos} carga={cargando}/>
-            {cargando? <img src={loading} alt="loading" />:
-                <ProductList products={productos} addToCart={handleAddToCart} borrarUnProducto={borrarUnProducto}/>
+            <Nav precioTotal={precioTotal} countItem={countItem} borrarUnProducto={borrarUnProducto} vaciarCarrito={vaciarCarrito} isCartOpen={isCartOpen} setCartOpen={setCartOpen} />
+            <Main productos={productos} carga={cargando} />
+            {cargando ? <img src={loading} alt="loading" /> :
+                <ProductList products={productos} addToCart={handleAddToCart} borrarUnProducto={borrarUnProducto} />
             }
-            <Cart cartItems={cart}/>
+            <Cart onClose={() => setCartOpen(false)} isCartOpen={isCartOpen} vaciarCarrito={vaciarCarrito} cartItems={cart} precioTotal={precioTotal} borrarUnProducto={borrarUnProducto}/>
+
             <Footer />
         </>
     )
