@@ -12,9 +12,10 @@ const Contacto = ({error, cargando, productos, cart, handleAddToCart, borrarUnPr
     }
     return (
         <>
-        <div className="container">
+        
         <Header />
         <Nav precioTotal={precioTotal} countItem={countItem} borrarUnProducto={borrarUnProducto} vaciarCarrito={vaciarCarrito} isCartOpen={isCartOpen} setCartOpen={setCartOpen}/>
+        <div className="pageContainer">
         <h2>Contacto</h2>
         <Formulario />
         </div>
