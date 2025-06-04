@@ -1,30 +1,110 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import './style/Formulario.css';
 
 const Formulario = () => {
-    const estilos = {backgroundColor:'lightgreen',margin:'10px', padding:'10px'
-    }
-    const [nombre, setNombre] = useState('')
+  const [form, setForm] = useState({
+    nombre: '',
+    email: '',
+    telefono: '',
+    asunto: '',
+    mensaje: '',
+  });
 
-    function manejarEnvio(evento){
-        evento.preventDefault(); //evita "que se recargue la pagina"
-        console.log(`valor nombre: ${nombre}`)
-        alert(`El formulario de: ${nombre}, fue enviado con exito`)
-        setNombre('')
-        console.log(`estado nombre despues de evento: ${nombre}`)
+  const [mensajeEstado, setMensajeEstado] = useState('');
+
+  const manejarCambio = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const manejarEnvio = (e) => {
+    e.preventDefault();
+
+    // Validación básica
+    const camposVacios = Object.values(form).some((valor) => valor.trim() === '');
+    if (camposVacios) {
+      setMensajeEstado('⚠️ Por favor completa todos los campos.');
+      return;
     }
+
+    setMensajeEstado(`✅ Gracias, ${form.nombre}. Tu mensaje fue enviado con éxito.`);
+
+    setForm({
+      nombre: '',
+      email: '',
+      telefono: '',
+      asunto: '',
+      mensaje: '',
+    });
+
+    // Ocultar mensaje después de unos segundos
+    setTimeout(() => {
+      setMensajeEstado('');
+    }, 4000);
+  };
 
   return (
-    <form style={estilos} onSubmit={manejarEnvio}>
-        <h3>Formulario</h3>
-        <input 
-            type="text"
-            value={nombre}
-            onChange={(e)=>setNombre(e.target.value)}
-            placeholder='Ingresa tu nombre...'
-        />
-        <button type='submit' style={{margin:'10px'}}>Enviar</button>
-    </form>
-  )
-}
+    <form className="formulario" onSubmit={manejarEnvio}>
+      <h3 className="formulario-titulo">Formulario de Contacto</h3>
 
-export default Formulario
+      <input
+        type="text"
+        name="nombre"
+        value={form.nombre}
+        onChange={manejarCambio}
+        placeholder="Nombre"
+        className="formulario-input"
+      />
+
+      <input
+        type="email"
+        name="email"
+        value={form.email}
+        onChange={manejarCambio}
+        placeholder="Correo electrónico"
+        className="formulario-input"
+      />
+
+      <input
+        type="tel"
+        name="telefono"
+        value={form.telefono}
+        onChange={manejarCambio}
+        placeholder="Teléfono"
+        className="formulario-input"
+      />
+
+      <input
+        type="text"
+        name="asunto"
+        value={form.asunto}
+        onChange={manejarCambio}
+        placeholder="Asunto"
+        className="formulario-input"
+      />
+
+      <textarea
+        name="mensaje"
+        value={form.mensaje}
+        onChange={manejarCambio}
+        placeholder="Escribe tu mensaje..."
+        className="formulario-textarea"
+        rows="4"
+      />
+
+      <button type="submit" className="formulario-boton">
+        Enviar
+      </button>
+
+      {mensajeEstado && (
+        <div className="formulario-mensaje">
+          {mensajeEstado}
+        </div>
+      )}
+    </form>
+  );
+};
+
+export default Formulario;

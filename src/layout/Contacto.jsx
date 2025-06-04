@@ -1,12 +1,25 @@
 import React from 'react'
 import Formulario from '../components/Formulario'
+import Header from '../components/Header'
+import Nav from '../components/Nav'
+import './style/Contacto.css'
 
-const Contacto = () => {
+const Contacto = ({error, cargando, productos, cart, handleAddToCart, borrarUnProducto, vaciarCarrito, isCartOpen, setCartOpen, precioTotal }) => {
+    const countItem = cart
+
+    if (error) {
+        return <NotFound />
+    }
     return (
-        <div>
-            <h2>Contactos</h2>
-            <Formulario />
+        <>
+        
+        <Header />
+        <Nav precioTotal={precioTotal} countItem={countItem} borrarUnProducto={borrarUnProducto} vaciarCarrito={vaciarCarrito} isCartOpen={isCartOpen} setCartOpen={setCartOpen}/>
+        <div className="pageContainer">
+        <h2>Contacto</h2>
+        <Formulario />
         </div>
+        </>
     )
 }
 
