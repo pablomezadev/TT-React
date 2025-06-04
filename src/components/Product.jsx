@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import './style/Product.css'
+import { Link } from 'react-router-dom'
 
 const Product = ({ id, product, addToCart }) => {
     const [cantidad, setCantidad] = useState(1)
@@ -16,6 +17,16 @@ const Product = ({ id, product, addToCart }) => {
         setTimeout(() => {
             // setAgregado(false)
         }, 3000)
+    }
+        const verMasStyle = {
+        backgroundColor: '#6a5acd', // un violeta suave que combina con azul
+        color: 'white',
+        padding: '8px 12px',
+        border: 'none',
+        borderRadius: '6px',
+        marginTop: '10px',
+        cursor: 'pointer',
+        textDecoration: 'none',
     }
 
 
@@ -36,6 +47,7 @@ const Product = ({ id, product, addToCart }) => {
             <button onClick={handleAgregar}>
                 Agregar
             </button>
+            <Link to={`/productos/${product.id}`} style={verMasStyle}>Ver más</Link>
         </section>
     )
 }

@@ -6,6 +6,10 @@ import Contacto from './layout/Contacto'
 import ProductList from './components/ProductList'
 import NotFound from './components/NotFound'
 import AcercaDe from './layout/AcercaDe'
+import DetallesProductos from './components/DetallesProductos'
+import RutaProtegida from './auth/RutaProtegida'
+import Login from './layout/Login'
+import Admin from './layout/Admin'
 
 function App() {
   const [cart, setToCart] = useState([])
@@ -14,6 +18,8 @@ function App() {
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState(false)
   const [precioTotal, setPrecioTotal] = useState(0)
+  const [isAuthenticated , setIsAuthenticated] = useState(false);
+
   // console.log('carrito array: ',cart)
 
   const handleAddToCart = (prod) => {
@@ -135,9 +141,16 @@ function App() {
         <Routes >
           <Route path="/" element={<Home error={error} cargando={cargando} productos={productos} cart={cart} handleAddToCart={handleAddToCart} borrarUnProducto={borrarUnProducto} vaciarCarrito={vaciarCarrito} isCartOpen={isCartOpen} setCartOpen={setCartOpen} precioTotal={precioTotal} />} />
           <Route path="/productos" element={<ProductList products={productos} addToCart={handleAddToCart} />} />
+          <Route path="/productos/:id" element={<DetallesProductos productos={productos}/>} />
 
           <Route path="/acercade" element={<AcercaDe />} />
-          <Route path="/contacto" element={<Contacto />} />
+          <Route path="/contacto" element={<Contacto error={error} cargando={cargando} productos={productos} cart={cart} handleAddToCart={handleAddToCart} borrarUnProducto={borrarUnProducto} vaciarCarrito={vaciarCarrito} isCartOpen={isCartOpen} setCartOpen={setCartOpen} precioTotal={precioTotal} />} />
+
+          <Route 
+            path="/admin" 
+            element={ <RutaProtegida isAuthenticated={isAuthenticated}> <Admin /></RutaProtegida>} />
+          <Route path="/login" element={ <Login /> }/>
+          
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
