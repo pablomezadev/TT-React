@@ -12,7 +12,8 @@ function App() {
   const [productos, setProductos] = useState([])
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState(false)
-
+  const [precioTotal, setPrecioTotal] = useState(0)
+  // const sumaTotal = () => { return cart.reduce((acc, item) => acc + (item.price * item.cantidad), 0);}
 
   useEffect(() => {
     // fetch('https://api.escuelajs.co/api/v1/products')
@@ -35,24 +36,48 @@ function App() {
   console.log(productos);
   // console.log("imagenes: "+productos.map(producto => producto.images[0]));
 
-  const handleAddToCart = (product) => {
-    const productInCart = cart.find(item => item.id === product.id);
+  // const handleAddToCart = (product) => {
+  //   const productInCart = cart.find(item => item.id === product.id);
 
-    if (productInCart) {
-      setCart(cart.map(item =>
-        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-      ));
+  //   if (productInCart) {
+  //     setCart(cart.map(item =>
+  //       item.id === product.id ? { ...item, cant: item.cant + 1 } : item
+  //     ));
+  //   } else {
+  //     setCart([...cart, { ...product, cant: 1 }]);
+  //   }
+  // }
+
+  const handleAddToCart = (prod) => {
+    const prdExiste = cart.find(item => item.id === prod.id)
+    if (prdExiste) {
+      if (prod.cantidad >= 1) {
+        alert(`El producto ${prod.title} ya existe en el carrito`)
+        console.log(`el producto ${prod.title} YA fué agregado`)
+      } else {
+        setCart(cart.map((item) => (
+          item.id === prod.id ? { ...item, cantidad: item.cantidad + prod.cantidad } : item // pruebas
+          // item.id === prod.id ? {...item, cantidad : item.cantidad + prod.cantidad }: item
+        )))
+      }
+      console.log('Carrito actualizado: ', cart);
+      // alert(`el producto ${prod.nombre} ya existe`)
+
     } else {
-      setCart([...cart, { ...product, quantity: 1 }]);
+      setCart([...cart, { ...prod, cantidad: prod.cantidad }])
+      console.log(`producto agregado: `, prod)
+      console.log(`carrito: `, cart)
     }
+    console.log('Carrito actualizado: ', cart);
   }
+
 
   const handleDeleteFromCart = (product) => {
     setCart(prevCart => {
       return prevCart.map(item => {
         if (item.id === product.id) {
-          if (item.quantity > 1) {
-            return { ...item, quantity: item.quantity - 1 }
+          if (item.cantidad > 1) {
+            return { ...item, cantidad: item.cantidad - 1 }
           } else {
             return null; //si es 1, lo marcamos para eliminarlo
           }
@@ -65,16 +90,22 @@ function App() {
 
 const handleVaciarCarrito = () => {
   setCart([]) // esto sí vacía correctamente el carrito
+  setPrecioTotal(0);
 }
+
+  useEffect(() => {
+    const total = cart.reduce((acc, item) => acc + (item.price * item.cantidad), 0);
+    setPrecioTotal(total);
+  }, [cart]); // se ejecuta automáticamente cuando cambia el carrito
 
   return (
     <>
       <Routes>
-        <Route path='/' element={<Home borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} agregarCarrito={handleAddToCart} cart={cart} productos={productos} cargando={cargando} error={error}/>} />
+        <Route path='/' element={<Home borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} agregarCarrito={handleAddToCart} cart={cart} productos={productos} cargando={cargando} error={error} precioTotal={precioTotal}/>} />
 
-        <Route path='/acercade' element={<AcercaDe borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} cart={cart} />} />
-        <Route path='/productos' element={<GaleriaDeProductos borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} agregarCarrito={handleAddToCart} cart={cart} productos={productos} cargando={cargando} />} />
-        <Route path='/contacto' element={<Contacto borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} cart={cart} />} />
+        <Route path='/acercade' element={<AcercaDe borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} cart={cart} precioTotal={precioTotal} />} />
+        <Route path='/productos' element={<GaleriaDeProductos borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} agregarCarrito={handleAddToCart} cart={cart} productos={productos} cargando={cargando} precioTotal={precioTotal}/>} />
+        <Route path='/contacto' element={<Contacto precioTotal={precioTotal} borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} cart={cart} />} />
         <Route path='/*' element={<NotFound />} />
       </Routes>
     </>

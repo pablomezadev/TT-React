@@ -1,4 +1,4 @@
-section {
+.productoCard {
   background-color: #f5f5f5;
   border: 1px solid #ddd;
   border-radius: 12px;
@@ -10,9 +10,10 @@ section {
   align-items: center;
   gap: 0.8rem;
   transition: transform 0.2s ease;
+  margin: 0.5rem;
 }
 
-section:hover {
+.productoCard:hover {
   transform: scale(1.02);
 }
 
@@ -122,9 +123,18 @@ button:last-of-type:hover {
   background-color: #333;
 }
 
+.productosContainer{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 1rem;
+  /* width: 90%; */
+  justify-content: center;
+}
+
 /* 📱 Teléfonos pequeños (hasta 480px) */
 @media (max-width: 480px) {
-  section {
+  .productoCard {
     width: 100%;
     padding: 0.8rem;
   }
@@ -155,7 +165,7 @@ button:last-of-type:hover {
 
 /* 📱📲 Teléfonos grandes / tablets (481px a 768px) */
 @media (min-width: 481px) and (max-width: 768px) {
-  section {
+  .productoCard {
     width: 100%;
   }
 
@@ -175,7 +185,7 @@ button:last-of-type:hover {
 
 /* 💻 Pantallas grandes (más de 768px) */
 @media (min-width: 769px) {
-  section {
+  .productoCard {
     width: 260px;
   }
 

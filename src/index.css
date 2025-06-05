@@ -28,7 +28,7 @@ a:hover {
 body {
   margin: 0;
   padding: 0;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   display: flex;
   flex-direction: column;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -40,15 +40,17 @@ body {
   display: flex;
   flex-direction: column;
   flex: 1;
+  align-items: center;
+  min-height: 100vh;
 }
 
 /* Contenido principal */
 main {
   flex: 1; /* Esto empuja al footer hacia abajo */
-  max-width: 1200px;
   width: 100%;
   margin: 0 auto;
   padding: 1rem;
+  /* justify-content: center; */
 }
 
 /* Títulos */

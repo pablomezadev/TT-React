@@ -5,7 +5,7 @@ import App from './App.jsx'
 import { BrowserRouter as Router} from 'react-router-dom'
 
 createRoot(document.getElementById('root')).render(
-  <Router basename="/TT-React">
+  <Router >
     <StrictMode>
       <App />
     </StrictMode>
