@@ -6,7 +6,7 @@ import { BrowserRouter as Router} from 'react-router-dom'
 import { CartProvider } from './context/CartContext.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <Router >
+  <Router basename='/TT-React'>
     <StrictMode>
       <CartProvider>
       <App />
