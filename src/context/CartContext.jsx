@@ -74,7 +74,7 @@ export const CartProvider = ({ children }) => {
         setCart(prevCart => {
             return prevCart.map(item => {
                 if (item.id === product.id) {
-                    if (item.cantidad > 1) {
+                    if (item.cantidad >= 1) {
                         //   return { ...item, cantidad: item.cantidad - 1 }
                         // } else {
                         //   return null; //si es 1, lo marcamos para eliminarlo
