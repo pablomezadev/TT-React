@@ -2,14 +2,18 @@ import React from 'react'
 import Header from '../components/estaticos/Header'
 import Footer from '../components/estaticos/Footer'
 
-function AcercaDe({cart, borrarProducto, vaciarCarrito}) {
+function AcercaDe({ cart, borrarProducto, vaciarCarrito, precioTotal, actualizarCantidad }) {
   return (
     <>
-      <Header cartItems={cart} borrarProducto={borrarProducto} vaciarCarrito={vaciarCarrito}/>
-      <h1>Acerca de</h1>
-      <p>Esta es una tienda de productos de prueba.</p>
-      <p>Desarrollada por [Tu Nombre] en [Fecha].</p>
-      <p>Para más información, visita nuestro sitio web.</p>
+      <Header cartItems={cart} borrarProducto={borrarProducto} vaciarCarrito={vaciarCarrito} precioTotal={precioTotal} actualizarCantidad={actualizarCantidad} />
+      <main>
+        <section className='cabecera-section'>
+          <h1>Acerca de</h1>
+          <p>Esta es una tienda de productos de prueba.</p>
+          <p>Desarrollada por Pablo en 2025.</p>
+          <p>Para más información, visita nuestro sitio web.</p>
+        </section>
+      </main>
       <Footer />
     </>
   )
