@@ -4,10 +4,10 @@ import Footer from '../components/estaticos/Footer'
 import Formulario from '../components/Formulario'
 import '../pages/styles/pages.css'
 
-function Contacto({ cart, borrarProducto, vaciarCarrito, precioTotal }) {
+function Contacto({ cart, borrarProducto, vaciarCarrito, precioTotal,actualizarCantidad}) {
   return (
     <>
-      <Header cartItems={cart} borrarProducto={borrarProducto} vaciarCarrito={vaciarCarrito} precioTotal={precioTotal} />
+      <Header cartItems={cart} borrarProducto={borrarProducto} vaciarCarrito={vaciarCarrito} precioTotal={precioTotal} actualizarCantidad={actualizarCantidad}/>
       <main>
         <section className='cabecera-section'>
           <h1>Contacto</h1>

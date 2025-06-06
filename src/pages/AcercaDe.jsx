@@ -2,10 +2,10 @@ import React from 'react'
 import Header from '../components/estaticos/Header'
 import Footer from '../components/estaticos/Footer'
 
-function AcercaDe({ cart, borrarProducto, vaciarCarrito, precioTotal }) {
+function AcercaDe({ cart, borrarProducto, vaciarCarrito, precioTotal, actualizarCantidad }) {
   return (
     <>
-      <Header cartItems={cart} borrarProducto={borrarProducto} vaciarCarrito={vaciarCarrito} precioTotal={precioTotal} />
+      <Header cartItems={cart} borrarProducto={borrarProducto} vaciarCarrito={vaciarCarrito} precioTotal={precioTotal} actualizarCantidad={actualizarCantidad} />
       <main>
         <section className='cabecera-section'>
           <h1>Acerca de</h1>

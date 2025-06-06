@@ -34,7 +34,7 @@
   height: 100vh;
   background-color: #fff;
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
-  padding: 24px;
+  padding: 12px;
   overflow-y: auto;
   z-index: 999;
   transform: translateX(100%);
@@ -94,6 +94,7 @@
 }
 
 .delete-btn {
+  /* padding: 0.1rem; */
   background: none;
   border: none;
   color: #d11a2a;
@@ -108,11 +109,12 @@
 
 /* Pie con total y acciones */
 .cart-footer {
-   display: flex;
+  display: flex;
   justify-content: space-between; /* Esto separa el contenido */
 
   border-top: 1px solid #e6e6e6;
-  padding-top: 20px;
+  /* padding-top: 20px; */
+  padding: 5px;
   font-size: 1.2rem;
 
   color: #232323;

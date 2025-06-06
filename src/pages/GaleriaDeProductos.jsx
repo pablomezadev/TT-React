@@ -5,10 +5,10 @@ import ProductList from '../components/ProductList'
 import Spinner from '../components/spinner'
 import '../pages/styles/pages.css'
 
-function GaleriaDeProductos({ cart, productos, cargando, agregarCarrito, borrarProducto, vaciarCarrito, precioTotal }) {
+function GaleriaDeProductos({ cart, productos, cargando, agregarCarrito, borrarProducto, vaciarCarrito, precioTotal, actualizarCantidad}) {
   return (
     <>
-      <Header cartItems={cart} borrarProducto={borrarProducto} vaciarCarrito={vaciarCarrito} precioTotal={precioTotal} />
+      <Header cartItems={cart} borrarProducto={borrarProducto} vaciarCarrito={vaciarCarrito} precioTotal={precioTotal} actualizarCantidad={actualizarCantidad}/>
       <main>
         <section className='cabecera-section'>
           <h1>Galería de Productos</h1>

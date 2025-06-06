@@ -7,13 +7,13 @@ import Spinner from '../components/spinner'
 import '../pages/styles/pages.css'
 
 
-function Home({ cart, productos, cargando, agregarCarrito, borrarProducto, vaciarCarrito, error, precioTotal }) {
+function Home({ cart, productos, cargando, agregarCarrito, borrarProducto, vaciarCarrito, error, precioTotal,actualizarCantidad }) {
   if (error) {
     return <NotFound />
   }
   return (
     <>
-      <Header cartItems={cart} borrarProducto={borrarProducto} vaciarCarrito={vaciarCarrito} precioTotal={precioTotal} />
+      <Header cartItems={cart} borrarProducto={borrarProducto} vaciarCarrito={vaciarCarrito} precioTotal={precioTotal} agregarCarrito={agregarCarrito} actualizarCantidad={actualizarCantidad}/>
       <main>
         <section  className="cabecera-section">
           <h1>Home</h1>

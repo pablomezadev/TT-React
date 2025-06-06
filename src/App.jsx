@@ -6,6 +6,10 @@ import AcercaDe from './pages/AcercaDe'
 import Contacto from './pages/Contacto'
 import GaleriaDeProductos from './pages/GaleriaDeProductos'
 import NotFound from './pages/NotFound'
+import DetallesProductos from './components/DetallesProductos'
+import Admin from './pages/Admin'
+import RutaProtegida from './auth/RutaProtegida'
+import Login from './pages/Login'
 
 function App() {
   const [cart, setCart] = useState([])
@@ -13,6 +17,7 @@ function App() {
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState(false)
   const [precioTotal, setPrecioTotal] = useState(0)
+  const [isAuthenticated , setIsAuthenticated] = useState(false);
   // const sumaTotal = () => { return cart.reduce((acc, item) => acc + (item.price * item.cantidad), 0);}
 
   useEffect(() => {
@@ -77,8 +82,9 @@ function App() {
       return prevCart.map(item => {
         if (item.id === product.id) {
           if (item.cantidad > 1) {
-            return { ...item, cantidad: item.cantidad - 1 }
-          } else {
+          //   return { ...item, cantidad: item.cantidad - 1 }
+          // } else {
+          //   return null; //si es 1, lo marcamos para eliminarlo
             return null; //si es 1, lo marcamos para eliminarlo
           }
         } else {
@@ -98,14 +104,36 @@ const handleVaciarCarrito = () => {
     setPrecioTotal(total);
   }, [cart]); // se ejecuta automáticamente cuando cambia el carrito
 
+
+  const actualizarCantidad = (producto, nuevaCantidad) => {
+    setCart(prevCartItems =>
+        prevCartItems.map(item =>
+            item.id === producto.id
+                ? { ...item, cantidad: nuevaCantidad }
+                : item
+        )
+    );
+};
+
+
   return (
     <>
       <Routes>
-        <Route path='/' element={<Home borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} agregarCarrito={handleAddToCart} cart={cart} productos={productos} cargando={cargando} error={error} precioTotal={precioTotal}/>} />
+        <Route path='/' element={<Home borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} agregarCarrito={handleAddToCart} cart={cart} productos={productos} cargando={cargando} error={error} precioTotal={precioTotal} actualizarCantidad={actualizarCantidad}/>} />
 
-        <Route path='/acercade' element={<AcercaDe borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} cart={cart} precioTotal={precioTotal} />} />
-        <Route path='/productos' element={<GaleriaDeProductos borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} agregarCarrito={handleAddToCart} cart={cart} productos={productos} cargando={cargando} precioTotal={precioTotal}/>} />
-        <Route path='/contacto' element={<Contacto precioTotal={precioTotal} borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} cart={cart} />} />
+        <Route path='/acercade' element={<AcercaDe borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} cart={cart} precioTotal={precioTotal} actualizarCantidad={actualizarCantidad}/>} />
+        <Route path='/productos' element={<GaleriaDeProductos borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} agregarCarrito={handleAddToCart} cart={cart} productos={productos} cargando={cargando} precioTotal={precioTotal} actualizarCantidad={actualizarCantidad}/>} />
+        <Route path="/productos/:id" element={<DetallesProductos productos={productos}/>} />
+        <Route path='/contacto' element={<Contacto precioTotal={precioTotal} borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} cart={cart} actualizarCantidad={actualizarCantidad}/>} />
+        
+        <Route path="/admin" 
+          element={ 
+            <RutaProtegida isAuthenticated={isAuthenticated}> 
+              <Admin />
+            </RutaProtegida>
+            } 
+        />
+        <Route path="/login" element={ <Login setIsAuthenticated={setIsAuthenticated}/> }/>
         <Route path='/*' element={<NotFound />} />
       </Routes>
     </>
