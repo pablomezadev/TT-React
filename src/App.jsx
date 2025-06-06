@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useContext } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import './App.css'
 import Home from './pages/Home'
@@ -6,75 +6,46 @@ import AcercaDe from './pages/AcercaDe'
 import Contacto from './pages/Contacto'
 import GaleriaDeProductos from './pages/GaleriaDeProductos'
 import NotFound from './pages/NotFound'
+import DetallesProductos from './components/DetallesProductos'
+import Admin from './pages/Admin'
+import RutaProtegida from './auth/RutaProtegida'
+import Login from './pages/Login'
+import { CartContext } from './context/CartContext'
 
 function App() {
-  const [cart, setCart] = useState([])
-  const [productos, setProductos] = useState([])
-  const [cargando, setCargando] = useState(true)
-  const [error, setError] = useState(false)
+ const { 
+  handleDeleteFromCart, 
+  handleVaciarCarrito, 
+  handleAddToCart, 
+  cart,
+  productos,
+  cargando,
+  error,
+  precioTotal,
+  actualizarCantidad,
+  isAuthenticated,
+  setIsAuthenticated
+  } = useContext(CartContext);
 
-
-  useEffect(() => {
-    // fetch('https://api.escuelajs.co/api/v1/products')
-    fetch('https://fakestoreapi.com/products')
-      .then(respuesta => respuesta.json())
-      //logica para manejar los datos
-      .then(datos => {
-        setTimeout(() => {
-          setProductos(datos)
-          setCargando(false)
-        }, 2000)
-      })
-      .catch(error => {
-        console.log("Error al intentar obtener productos: ", error)
-        setCargando(false)
-        setError(true)
-      })
-  }, [])
-
-  console.log(productos);
-  // console.log("imagenes: "+productos.map(producto => producto.images[0]));
-
-  const handleAddToCart = (product) => {
-    const productInCart = cart.find(item => item.id === product.id);
-
-    if (productInCart) {
-      setCart(cart.map(item =>
-        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-      ));
-    } else {
-      setCart([...cart, { ...product, quantity: 1 }]);
-    }
-  }
-
-  const handleDeleteFromCart = (product) => {
-    setCart(prevCart => {
-      return prevCart.map(item => {
-        if (item.id === product.id) {
-          if (item.quantity > 1) {
-            return { ...item, quantity: item.quantity - 1 }
-          } else {
-            return null; //si es 1, lo marcamos para eliminarlo
-          }
-        } else {
-          return item; //si no es el producto, lo dejamos igual
-        }
-      }).filter(item => item !== null); //eliminamos los productos marcados como null
-    });
-  };
-
-const handleVaciarCarrito = () => {
-  setCart([]) // esto sí vacía correctamente el carrito
-}
 
   return (
     <>
       <Routes>
-        <Route path='/' element={<Home borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} agregarCarrito={handleAddToCart} cart={cart} productos={productos} cargando={cargando} error={error}/>} />
+        <Route path='/' element={<Home borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} agregarCarrito={handleAddToCart} cart={cart} productos={productos} cargando={cargando} error={error} precioTotal={precioTotal} actualizarCantidad={actualizarCantidad}/>} />
 
-        <Route path='/acercade' element={<AcercaDe borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} cart={cart} />} />
-        <Route path='/productos' element={<GaleriaDeProductos borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} agregarCarrito={handleAddToCart} cart={cart} productos={productos} cargando={cargando} />} />
-        <Route path='/contacto' element={<Contacto borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} cart={cart} />} />
+        <Route path='/acercade' element={<AcercaDe borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} cart={cart} precioTotal={precioTotal} actualizarCantidad={actualizarCantidad}/>} />
+        <Route path='/productos' element={<GaleriaDeProductos borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} agregarCarrito={handleAddToCart} cart={cart} productos={productos} cargando={cargando} precioTotal={precioTotal} actualizarCantidad={actualizarCantidad}/>} />
+        <Route path="/productos/:id" element={<DetallesProductos productos={productos}/>} />
+        <Route path='/contacto' element={<Contacto precioTotal={precioTotal} borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} cart={cart} actualizarCantidad={actualizarCantidad}/>} />
+        
+        <Route path="/admin" 
+          element={ 
+            <RutaProtegida isAuthenticated={isAuthenticated}> 
+              <Admin />
+            </RutaProtegida>
+            } 
+        />
+        <Route path="/login" element={ <Login setIsAuthenticated={setIsAuthenticated}/> }/>
         <Route path='/*' element={<NotFound />} />
       </Routes>
     </>

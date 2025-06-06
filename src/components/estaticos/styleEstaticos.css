@@ -9,8 +9,8 @@
 
 header,
 footer {
-  width: 100%;
-  background-color: white;
+  width: 90%;
+  background-color: rgb(255, 255, 255);
   color: white;
   padding: 1rem 0;
   text-align: center;
