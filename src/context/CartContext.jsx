@@ -2,7 +2,7 @@ import {createContext,  useState,useEffect} from 'react';
 
 export const CartContext = createContext();
 
-export const CartProvider = ({ children }) => {
+export const CartProvider = ({ children }) => { // 1. Crear el contexto y el proveedor
   const [cart, setToCart] = useState([])
   const [isCartOpen, setCartOpen] = useState(false);
   const [productos, setProductos] = useState([])
@@ -97,6 +97,7 @@ export const CartProvider = ({ children }) => {
 
   useEffect(() => {
     // fetch('https://api.escuelajs.co/api/v1/products')
+    // fetch('https://fakestoreapi.com/products')
     fetch('https://fakestoreapi.com/products')
       .then(respuesta => respuesta.json())
       //logica para manejar los datos
