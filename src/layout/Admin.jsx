@@ -14,7 +14,7 @@ function Admin() {
   useEffect(() => {
     // fetch('https://api.escuelajs.co/api/v1/products')
     // fetch('https://fakestoreapi.com/products')
-    fetch('https://6828d1896075e87073a509a9.mockapi.io/productos-ecommerce/productos')
+    fetch('https://api.escuelajs.co/api/v1/products')
       .then(respuesta => respuesta.json())
       //logica para manejar los datos
       .then(datos => {
@@ -38,7 +38,8 @@ function Admin() {
   const agregarProducto = async (producto) => {
 
     try {
-      const response = await fetch('https://6828d1896075e87073a509a9.mockapi.io/productos-ecommerce/productos', {
+      // const response = await fetch('https://6828d1896075e87073a509a9.mockapi.io/productos-ecommerce/productos', {
+      const response = await fetch('https://api.escuelajs.co/api/v1/products', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -51,7 +52,7 @@ function Admin() {
       }
 
       const data = await response.json();
-      alert('Producto : ' + producto.nombre + ', fué agregado exitosamente');
+      alert('Producto : ' + data.title + ', fué agregado exitosamente');
 
     } catch (error) {
       console.error('Error al agregar el producto:', error);
@@ -84,12 +85,12 @@ function Admin() {
                   {productos.map((product) => (
                     <li key={product.id} className="listItem">
                       <img
-                        src={product.imagen}
-                        alt={product.nombre}
+                        src={product.images[0]}
+                        alt={product.title}
                         className="listItemImage"
                       />
-                      <span>{product.nombre}</span>
-                      <span>${product.precio}</span>
+                      <span>{product.title}</span>
+                      <span>${product.price}</span>
                       <div>
                         <button className="editButton">Editar</button>
 

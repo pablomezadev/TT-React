@@ -11,22 +11,24 @@ import {useState} from 'react'
 function FormularioProductos({onAgregar}) {
     const [error, setError] = useState(false);
     const [productos, setProductos] = useState({
-        nombre: '',
-        precio: '',
-        descripcion: ''
+        title: '',
+        price: '',
+        description: '',
+        categoryId: 1,
+        images:["https://pixabay.com/es/photos/firmar-signo-abierto-se%C3%B1alizaci%C3%B3n-8032702/"]
     });
 
     // Validación básica de los campos del formulario
     const validarCampos = () => {
         let nuevosErrores = {};
-        if (!productos.nombre.trim()) {
-            nuevosErrores.nombre = 'El nombre es requerido';
+        if (!productos.title.trim()) {
+            nuevosErrores.title = 'El nombre es requerido';
         }
-        if (!productos.precio || productos.precio <= 0) {
-            nuevosErrores.precio = 'El precio debe ser mayor a 0';
+        if (!productos.price || productos.price <= 0) {
+            nuevosErrores.price = 'El precio debe ser mayor a 0';
         }
-        if (!productos.descripcion || productos.descripcion.trim().length < 10) {
-            nuevosErrores.descripcion = 'La descripción debe tener al menos 10 caracteres';
+        if (!productos.description || productos.description.trim().length < 10) {
+            nuevosErrores.description = 'La descripción debe tener al menos 10 caracteres';
         }
         setError(nuevosErrores);
         return Object.keys(nuevosErrores).length === 0; // Retorna true si no hay errores
@@ -42,11 +44,13 @@ function FormularioProductos({onAgregar}) {
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevenimos el comportamiento por defecto del formulario
         // Validación básica
-        onAgregar(productos); // Llamamos a la función onAgregar pasando el producto
-        setProductos({
-            nombre: '',
-            precio: '',
-            descripcion: ''
+        onAgregar(productos); // Llamamos a la función onAgregar pasando el producto desde admin.jsx
+        setProductos({ // Reiniciamos el estado del formulario
+            title: '',
+            price: '',
+            description: '',
+            categoryId: '',
+            images:[]
         })
     }
 
@@ -54,28 +58,28 @@ function FormularioProductos({onAgregar}) {
     <form onSubmit={handleSubmit} className="formulario-productos">
         <h2>Agregar Producto</h2>
         <div>
-            <label>Nombre:</label>
+            <label htmlFor='title'>Nombre:</label>
             <input type="text" 
-                    name='nombre'
-                    value={productos.nombre}
+                    name='title'
+                    value={productos.title}
                     onChange={handleChange} required/>
-            {error.nombre && <p style={{ color: 'red' }}>{error.nombre}</p>}
+            {error.title && <p style={{ color: 'red' }}>{error.title}</p>}
         </div>
         <div>
-            <label>Precio:</label>
+            <label label htmlFor="price">Precio:</label>
             <input type="number" 
-                    name='precio'
-                    value={productos.precio}
+                    name='price'
+                    value={productos.price}
                     onChange={handleChange} required
                     min="0"/>
-            {error.precio && <p style={{ color: 'red' }}>{error.precio}</p>}
+            {error.price && <p style={{ color: 'red' }}>{error.price}</p>}
         </div>
         <div>
-            <label>Descripción:</label>
-            <textarea name='descripcion'
-                      value={productos.descripcion}
+            <label label htmlFor="description">Descripción:</label>
+            <textarea name='description'
+                      value={productos.description}
                       onChange={handleChange} required></textarea> 
-            {error.descripcion && <p style={{ color: 'red' }}>{error.descripcion}</p>}
+            {error.description && <p style={{ color: 'red' }}>{error.description}</p>}
         </div>
         <button type="submit">Agregar Producto</button> 
     </form>
