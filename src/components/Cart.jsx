@@ -1,25 +1,26 @@
 import React from 'react'
 import './style/Cart.css'
+import { useContext } from 'react'
+import { CartContext } from '../context/CartContext'
 
-const Cart = ({ cartItems, borrarUnProducto, vaciarCarrito, isCartOpen, onClose, precioTotal }) => {
+const Cart = ({onClose}) => {
+    const { cart, borrarUnProducto, vaciarCarrito, isCartOpen, setCartOpen, precioTotal  } = useContext(CartContext)
+
     const estilos = { listStyle: 'none' }
     const visibilidadCarrito = isCartOpen ? 'open' : 'close'
-    // console.log(`cantidad de productos: ${cartItems.length}`)
-    console.log('valor isCartOpen: ', isCartOpen)
-    console.log("precioTotal: ", precioTotal)
 
     return (
-        <div className={`cart-overlay-${isCartOpen ? 'open' : 'close'}`} onClick={onClose}>
+        <div className={`cart-overlay-${isCartOpen ? 'open' : 'close'}`} onClick={()=>setCartOpen(false)}>
             <div className={`cart-drawer ${visibilidadCarrito}`} onClick={(e) => e.stopPropagation()}> {/*style={ visibilidadCarrito} */}
                 <h2>Carrito de compras</h2>
-                <button onClick={onClose}><li className="fa-solid fa-arrow-left"></li></button>
+                <button onClick={()=>setCartOpen(false)}><li className="fa-solid fa-arrow-left"></li></button>
                 {
-                    cartItems.length === 0 ? (<p>No hay productos</p>) :
+                    cart.length === 0 ? (<p>No hay productos</p>) :
                         (
                             <>
                                 <ul style={estilos}>
                                     {
-                                        cartItems.map((item, index) => (
+                                        cart.map((item, index) => (
                                             <li key={index} >{item.title} - ${item.price} - cant: {item.cantidad}
                                                 <button onClick={() => borrarUnProducto(item)}><li className='fa-solid fa-trash'></li></button>
                                             </li>

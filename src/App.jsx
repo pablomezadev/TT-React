@@ -11,6 +11,7 @@ import RutaProtegida from './auth/RutaProtegida'
 import Login from './layout/Login'
 import Admin from './layout/Admin'
 import {CartContext} from './context/CartContext.jsx'
+import GaleriaProductos from './layout/GaleriaProductos.jsx'
 
 function App() {
 
@@ -33,10 +34,9 @@ function App() {
 
   return (
     <>
-      <Router>
         <Routes >
-          <Route path="/" element={<Home error={error} cargando={cargando} productos={productos} cart={cart} handleAddToCart={handleAddToCart} borrarUnProducto={borrarUnProducto} vaciarCarrito={vaciarCarrito} isCartOpen={isCartOpen} setCartOpen={setCartOpen} precioTotal={precioTotal} />} />
-          <Route path="/productos" element={<ProductList products={productos} addToCart={handleAddToCart} />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/galeriadeproductos" element={<GaleriaProductos products={productos} addToCart={handleAddToCart} />} />
           <Route path="/productos/:id" element={<DetallesProductos productos={productos}/>} />
 
           <Route path="/acercade" element={<AcercaDe />} />
@@ -49,7 +49,6 @@ function App() {
           
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </Router>
     </>
   )
 }
