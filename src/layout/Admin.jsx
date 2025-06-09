@@ -28,7 +28,7 @@ function Admin() {
         setCargando(false)
         setError(true)
       })
-  }, [])
+  }, [productos]) // Dependencia productos para que se actualice al agregar un nuevo producto
 
   console.log(
     'productos desde ADMIN API: ', productos

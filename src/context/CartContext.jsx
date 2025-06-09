@@ -141,7 +141,8 @@ export const CartProvider = ({ children }) => { // 1. Crear el contexto y el pro
             handleAddToCart,
             borrarUnProducto,
             vaciarCarrito,
-            sumaTotal,
+            sumaTotal
+            ,
             isAuthenticated, 
             setIsAuthenticated
         }}>
