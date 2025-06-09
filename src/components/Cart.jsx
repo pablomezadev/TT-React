@@ -1,7 +1,11 @@
 import React from 'react'
 import './style/Cart.css'
+import { useContext } from 'react'
+import { CartContext } from '../context/CartContext'
 
-const Cart = ({ cartItems, borrarUnProducto, vaciarCarrito, isCartOpen, onClose, precioTotal }) => {
+const Cart = ({onClose}) => {
+    const { cart, handleDeleteFromCart, vaciarCarrito, isCartOpen, setCartOpen, precioTotal  } = useContext(CartContext)
+
     const estilos = { listStyle: 'none' }
     const visibilidadCarrito = isCartOpen ? 'open' : 'close'
     // console.log(`cantidad de productos: ${cartItems.length}`)
@@ -14,14 +18,14 @@ const Cart = ({ cartItems, borrarUnProducto, vaciarCarrito, isCartOpen, onClose,
                 <h2>Carrito de compras</h2>
                 <button onClick={onClose}><li className="fa-solid fa-arrow-left"></li></button>
                 {
-                    cartItems.length === 0 ? (<p>No hay productos</p>) :
+                    cart.length === 0 ? (<p>No hay productos</p>) :
                         (
                             <>
                                 <ul style={estilos}>
                                     {
-                                        cartItems.map((item, index) => (
+                                        cart.map((item, index) => (
                                             <li key={index} >{item.title} - ${item.price} - cant: {item.cantidad}
-                                                <button onClick={() => borrarUnProducto(item)}><li className='fa-solid fa-trash'></li></button>
+                                                <button onClick={() => handleDeleteFromCart(item)}><li className='fa-solid fa-trash'></li></button>
                                             </li>
                                         ))
                                     }
