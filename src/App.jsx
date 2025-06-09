@@ -35,7 +35,7 @@ function App() {
   return (
     <>
         <Routes >
-          <Route path="/" element={<Home error={error} cargando={cargando} productos={productos} cart={cart} handleAddToCart={handleAddToCart} borrarUnProducto={borrarUnProducto} vaciarCarrito={vaciarCarrito} isCartOpen={isCartOpen} setCartOpen={setCartOpen} precioTotal={precioTotal} />} />
+          <Route path="/" element={<Home />} />
           <Route path="/galeriadeproductos" element={<GaleriaProductos products={productos} addToCart={handleAddToCart} />} />
           <Route path="/productos/:id" element={<DetallesProductos productos={productos}/>} />
 
