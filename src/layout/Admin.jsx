@@ -3,18 +3,19 @@ import loading from '../assets/loading.gif'
 import './style/Admin.css'
 import { data } from 'react-router-dom';
 import FormularioProductos from '../components/FormularioProductos';
+import FormularioEditarProd from '../components/FormularioEditarProd';
 
 function Admin() {
   const [cargando, setCargando] = useState(true);
   const [productos, setProductos] = useState([]);
   const [error, setError] = useState(false);
   const [open, setOpen] = useState(false)
-
+  const apiUrl = 'https://6828d1896075e87073a509a9.mockapi.io/productos-ecommerce/productos';
+  const [seleccionado, setSeleccionado] = useState(null);
+  const [openEditar, setOpenEditar] = useState(false);
 
   useEffect(() => {
-    // fetch('https://api.escuelajs.co/api/v1/products')
-    // fetch('https://fakestoreapi.com/products')
-    fetch('https://api.escuelajs.co/api/v1/products')
+    fetch('https://6828d1896075e87073a509a9.mockapi.io/productos-ecommerce/productos')
       .then(respuesta => respuesta.json())
       //logica para manejar los datos
       .then(datos => {
@@ -28,18 +29,31 @@ function Admin() {
         setCargando(false)
         setError(true)
       })
-  }, [productos]) // Dependencia productos para que se actualice al agregar un nuevo producto
+  }, []) //
 
-  console.log(
-    'productos desde ADMIN API: ', productos
-  )
+
+  const cargarProductos = async () => {
+    try {
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+      setProductos(data);
+    } catch (error) {
+      console.error('Error al cargar los productos:', error);
+    }
+  }
+
+
+  // console.log(
+  //   'productos desde ADMIN API: ', productos
+  // )
 
 
   const agregarProducto = async (producto) => {
 
     try {
       // const response = await fetch('https://6828d1896075e87073a509a9.mockapi.io/productos-ecommerce/productos', {
-      const response = await fetch('https://api.escuelajs.co/api/v1/products', {
+      // const response = await fetch('https://api.escuelajs.co/api/v1/products', {
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -52,10 +66,52 @@ function Admin() {
       }
 
       const data = await response.json();
-      alert('Producto : ' + data.title + ', fué agregado exitosamente');
+      alert('Producto : ' + data.nombre + ', fué agregado exitosamente');
+      cargarProductos(); // Recargar la lista de productos después de agregar uno nuevo
 
     } catch (error) {
       console.error('Error al agregar el producto:', error);
+    }
+  }
+
+  const eliminarProducto = async (id) => {
+    const confirmarDelete = window.confirm('¿Estás seguro de que deseas eliminar este producto?');
+    if (confirmarDelete) {
+      try {
+        // const response = await fetch(`https://6828d1896075e87073a509a9.mockapi.io/productos-ecommerce/productos/${id}`, {
+        // const response = await fetch(`https://api.escuelajs.co/api/v1/products/${id}`, {
+        const response = await fetch(`${apiUrl}/${id}`, {
+          method: 'DELETE',
+        });
+        if (!response.ok) throw new Error('Error al eliminar el producto');
+        alert('Producto eliminado exitosamente');
+        cargarProductos(); // Recargar la lista de productos después de eliminar uno
+      } catch (error) {
+        console.error('Error al eliminar el producto:', error);
+      }
+    }
+  }
+
+
+  const actualizarProducto = async (producto) => {
+    try {
+      const response = await fetch(`${apiUrl}/${producto.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(producto),
+      });
+
+      if (!response.ok) throw new Error('Error de servicio al actualizar el producto');
+      const data = await response.json();
+      alert('Producto:  ' + data.nombre + ' actualizado exitosamente');
+      //cargarProductos(); // Recargar la lista de productos después de actualizar uno
+      setOpenEditar(false); // Cerrar el formulario de edición
+      setSeleccionado(null); // Limpiar el producto seleccionado
+      cargarProductos(); // Recargar la lista de productos después de actualizar uno
+    } catch (error) {
+      console.error('Error general al actualizar el producto:', error);
     }
   }
 
@@ -85,26 +141,31 @@ function Admin() {
                   {productos.map((product) => (
                     <li key={product.id} className="listItem">
                       <img
-                        src={product.images[0]}
-                        alt={product.title}
+                        src={product.imagen}
+                        alt={product.nombre}
                         className="listItemImage"
                       />
-                      <span>{product.title}</span>
-                      <span>${product.price}</span>
+                      <span>{product.nombre}</span>
+                      <span>${product.precio}</span>
                       <div>
-                        <button className="editButton">Editar</button>
+                        <button className="editButton"
+                          onClick={() => {
+                            setOpenEditar(true)
+                            setSeleccionado(product)
+                          }}>Editar</button>
 
-                        <button className="deleteButton">Eliminar</button>
+                        <button onClick={() => eliminarProducto(product.id)} className="deleteButton">Eliminar</button>
                       </div>
                     </li>
                   ))}
                 </ul>
-                <button onClick={() => setOpen(true)}>Agregar producto nuevo</button>
-                {open && (<FormularioProductos onAgregar={agregarProducto} />)}
               </div>
             </>
           )}
-
+      <button onClick={() => setOpen(true)}>Agregar producto nuevo</button>
+      {open && (<FormularioProductos onAgregar={agregarProducto} />)}
+      {openEditar && (<FormularioEditarProd productoSeleccionado={seleccionado}
+        onActualizarProducto={actualizarProducto} />)}
     </div>
   )
 };

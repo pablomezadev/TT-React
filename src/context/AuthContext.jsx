@@ -1,4 +1,4 @@
-import {createContext,useContext, useState} from 'react';
+import {createContext,useEffect,useContext, useState} from 'react';
 import { useNavigate } from 'react-router-dom'; // Importamos useNavigate para redireccionar al usuario después de la autenticación
 import { CartContext } from './CartContext'; // Importamos el contexto del carrito para actualizar el estado de autenticación
 
@@ -13,6 +13,19 @@ export const AuthProvider = ({ children }) => {
     
     const { setIsAuthenticated } = useContext(CartContext); // para actualizar el estado de autenticación desde carrito
     
+
+    useEffect(() => {
+        // Verificamos si el usuario ya está autenticado
+        const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true'; // Verificamos si el usuario está autenticado
+        if (isAuthenticated) {
+            setIsAuthenticated(true); // Actualizamos el estado de autenticación
+            navigate('/admin'); // Redireccionamos a la ruta protegida
+        }
+
+    }, []); // Dependencias del useEffect
+    // useEffect se ejecuta una vez al montar el componente y verifica si el usuario ya está autenticado
+    // Si el usuario ya está autenticado, actualiza el estado de autenticación y redirecciona a la ruta protegida
+
     const handleSubmit = async (e) => { // función para manejar el envío del formulario // async para poder usar await dentro de ella
     // e es el evento del formulario  
     
@@ -42,6 +55,7 @@ export const AuthProvider = ({ children }) => {
     }else {
       if (foundUser.role === 'admin') {
         setIsAuthenticated(true); // Actualizamos el estado de autenticación
+        localStorage.setItem('isAuthenticated', 'true'); // Guardamos el estado de autenticación en localStorage
         navigate('/admin'); // Redireccionamos a la ruta protegida
       }else{
         navigate('/'); // Redireccionamos a la ruta pública
