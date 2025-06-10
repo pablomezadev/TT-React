@@ -103,7 +103,7 @@ function Admin() {
         body: JSON.stringify(producto),
       });
 
-      if (!response.ok) throw new Error('Error al actualizar el producto');
+      if (!response.ok) throw new Error('Error de servicio al actualizar el producto');
       const data = await response.json();
       alert('Producto:  ' + data.nombre + ' actualizado exitosamente');
       //cargarProductos(); // Recargar la lista de productos después de actualizar uno
@@ -111,7 +111,7 @@ function Admin() {
       setSeleccionado(null); // Limpiar el producto seleccionado
       cargarProductos(); // Recargar la lista de productos después de actualizar uno
     } catch (error) {
-      console.error('Error al actualizar el producto:', error);
+      console.error('Error general al actualizar el producto:', error);
     }
   }
 
