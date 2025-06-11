@@ -21,7 +21,7 @@ const Cart = ({onClose}) => {
                                 <ul style={estilos}>
                                     {
                                         cart.map((item, index) => (
-                                            <li key={index} >{item.title} - ${item.price} - cant: {item.cantidad}
+                                            <li key={index} >{item.nombre} - ${item.precio} - cant: {item.cantidad}
                                                 <button onClick={() => borrarUnProducto(item)}><li className='fa-solid fa-trash'></li></button>
                                             </li>
                                         ))

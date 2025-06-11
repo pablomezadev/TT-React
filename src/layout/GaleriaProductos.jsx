@@ -10,7 +10,9 @@ import Footer from '../components/Footer'
 import loading from '../assets/loading.gif'
 
 function GaleriaProductos({addToCart, products, borrarUnProducto}) {
-const { productos, error,cart,cargando, handleDeleteFromCart, vaciarCarrito, isCartOpen, setCartOpen, precioTotal  } = useContext(CartContext)
+const { productos, error,cart,cargando, handleDeleteFromCart, vaciarCarrito, 
+        isCartOpen, setCartOpen, precioTotal
+        } = useContext(CartContext)
 
     if (error) {
         return <NotFound />

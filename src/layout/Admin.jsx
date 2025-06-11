@@ -1,29 +1,36 @@
 import { useContext } from 'react'
 import loading from '../assets/loading.gif'
 import './style/Admin.css'
-// import { data } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import FormularioProductos from '../components/FormularioProductos';
 import FormularioEditarProd from '../components/FormularioEditarProd';
 import { AdminContext } from '../context/AdminContext';
-// import { CartContext } from '../context/CartContext';
+import { CartContext } from '../context/CartContext';
 
 
 function Admin() {
   const {
-            actualizarProducto, 
-            seleccionado, 
-            agregarProducto, 
-            openEditar, 
-            open, 
-            setOpen,
-            cargando,
-            eliminarProducto,
-            productos,
-            setOpenEditar,
-            setSeleccionado
+    actualizarProducto,
+    seleccionado,
+    agregarProducto,
+    openEditar,
+    open,
+    setOpen,
+    cargando,
+    eliminarProducto,
+    productos,
+    setOpenEditar,
+    setSeleccionado
   } = useContext(AdminContext)
 
-// const { setIsAuthenticated } = useContext(CartContext);
+  const linkStyle = ({ isActive }) =>
+    isActive
+      ? { fontWeight: 'bold', color: 'yellow', textDecoration: 'underline' }
+      : undefined;
+
+  const navigate = useNavigate()
+
+  const { setIsAuthenticated } = useContext(CartContext);
   return (
 
     <div className='adminContainer'>
@@ -36,8 +43,18 @@ function Admin() {
                   <li className="navItem">
                     <a href="/admin">Admin</a>
                   </li>
+                  {/* <li >
+                    <NavLink to="/login" style={linkStyle}>
+                      <i className="fa-solid fa-right-to-bracket"></i>
+                    </NavLink>
+                  </li> */}
+
                   <li className="navItem">
-                    <button className="navButton">
+                    <button className="navButton" onClick={() => {
+                                    setIsAuthenticated(false);
+                                    navigate('/');
+                                    localStorage.removeItem('isAuthenticated');
+                                }}>
                       <i className="fa-solid fa-right-from-bracket"></i>
                     </button>
                   </li>

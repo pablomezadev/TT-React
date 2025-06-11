@@ -6,23 +6,28 @@ import { CartContext } from '../context/CartContext'
 
 // const ProductList = ({ products, addToCart, borrarUnProducto }) => {
 const ProductList = () => {
-    const { productos, handleAddToCart } = useContext(CartContext)
+    const { productos, handleAddToCart, productosFiltrados, busqueda,setBusqueda } = useContext(CartContext)
 
     return (
         <div className='lista-productos'>
-        <h1>Lista de productos</h1>
-        <div className="product-grid">
-            {
-                productos.map((prod, index) => (
-                    <Product
-                        key={prod.id} 
-                        id={prod.id} 
-                        product={prod} 
-                        addToCart={handleAddToCart}
-                    />
-                ))
-            }
-        </div>
+            <h1>Lista de productos</h1>
+            <input type="text"
+                placeholder='Buscar producto...'
+                value={busqueda}
+                onChange={(e) => setBusqueda(e.target.value)}
+            />
+            <div className="product-grid">
+                {
+                    productosFiltrados.map((prod, index) => (
+                        <Product
+                            key={prod.id}
+                            id={prod.id}
+                            product={prod}
+                            addToCart={handleAddToCart}
+                        />
+                    ))
+                }
+            </div>
         </div>
     )
 }
