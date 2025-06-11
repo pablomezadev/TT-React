@@ -10,6 +10,8 @@ export const CartProvider = ({ children }) => { // 1. Crear el contexto y el pro
   const [error, setError] = useState(false)
   const [precioTotal, setPrecioTotal] = useState(0)
   const [isAuthenticated , setIsAuthenticated] = useState(false);
+  const [busqueda, setBusqueda] = useState("")
+  const apiUrl = "https://6828d1896075e87073a509a9.mockapi.io/productos-ecommerce/productos"
 
   // console.log('carrito array: ',cart)
 
@@ -17,7 +19,7 @@ export const CartProvider = ({ children }) => { // 1. Crear el contexto y el pro
     const prdExiste = cart.find(item => item.id === prod.id)
     if (prdExiste) {
       if (prod.cantidad >= 1) {
-        console.log(`el producto ${prod.title} YA fué agregado`)
+        console.log(`el producto ${prod.nombre} YA fué agregado`)
       } else {
         setToCart(cart.map((item) => (
           // item.id === prod.id ? {...item, cant : item.cant+1 }: item // ok 
@@ -98,7 +100,7 @@ export const CartProvider = ({ children }) => { // 1. Crear el contexto y el pro
   useEffect(() => {
     // fetch('https://api.escuelajs.co/api/v1/products')
     // fetch('https://fakestoreapi.com/products')
-    fetch('https://fakestoreapi.com/products')
+    fetch(apiUrl)
       .then(respuesta => respuesta.json())
       //logica para manejar los datos
       .then(datos => {
@@ -117,13 +119,17 @@ export const CartProvider = ({ children }) => { // 1. Crear el contexto y el pro
   console.log(
     'productos desde API: ', productos
   )
+  
+  const productosFiltrados = productos.filter((producto)=>producto.
+  nombre?.toLowerCase().includes(busqueda.toLowerCase())) 
+  console.log("productos filtrados: "+productosFiltrados)
 
   const sumaTotal = () => {
-    return cart.reduce((acc, item) => acc + (item.price * item.cantidad), 0);
+    return cart.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
   }
 
   useEffect(() => {
-    const total = cart.reduce((acc, item) => acc + (item.price * item.cantidad), 0);
+    const total = cart.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
     setPrecioTotal(total);
   }, [cart]); // se ejecuta automáticamente cuando cambia el carrito
 
@@ -141,9 +147,12 @@ export const CartProvider = ({ children }) => { // 1. Crear el contexto y el pro
             handleAddToCart,
             borrarUnProducto,
             vaciarCarrito,
-            sumaTotal
-            ,
+            sumaTotal,
             isAuthenticated, 
+            setIsAuthenticated,
+            busqueda,
+            setBusqueda,
+            productosFiltrados,
             setIsAuthenticated
         }}>
             {children}

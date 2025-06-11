@@ -15,11 +15,11 @@ function DetallesProductos({productos}) {
             {
                 product ? (
                     <div>
-                        <h3>{product.title}</h3>
-                        <img src={product.image} alt={product.title} />
-                        <p>Precio: ${product.price}</p>
-                        <p>Descripción: {product.description}</p>
-                        <p>Calificación: {product.rating.rate} ({product.rating.count} votos)</p>
+                        <h3>{product.nombre}</h3>
+                        <img src={product.imagen} alt={product.nombre} />
+                        <p>Precio: ${product.precio}</p>
+                        <p>Descripción: {product.descripcion}</p>
+                        {/* <p>Calificación: {product.rating.rate} ({product.rating.rate} votos)</p> */}
                     </div>
                 ) : (
                     <p>Producto no encontrado</p>

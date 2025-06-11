@@ -7,7 +7,7 @@ const Product = ({ id, product, addToCart }) => {
     // const [stock, setStock] = useState(5)
     const [agregado, setAgregado] = useState(false)
 
-    const aumentar = () => setCantidad(prev => prev != product.rating.count ? prev + 1 : prev)
+    const aumentar = () => setCantidad(prev => prev != product.stock ? prev + 1 : prev)
     const disminuir = () => setCantidad((prev) => prev > 1 ? prev - 1 : 1)
 
     const handleAgregar = () => {
@@ -34,10 +34,10 @@ const Product = ({ id, product, addToCart }) => {
         <section className="product-card">
             <div className='fondoProducto'>
             </div>
-            <img src={product.image} alt={`imagen_${product.title}`} />
-            <h3 >{product.title}</h3>
-            <p >Stock: {product.rating.count}</p>
-            <p >Precio: ${product.price}</p>
+            <img src={product.imagen} alt={`imagen_${product.nombre}`} />
+            <h3 >{product.nombre}</h3>
+            <p >Stock: {product.stock}</p>
+            <p >Precio: ${product.precio}</p>
             <div className="cantidad-control">
                 <button onClick={disminuir}>-</button>
                 <span>{cantidad}</span>

@@ -8,9 +8,7 @@ export const AuthProvider = ({ children }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setError] = useState({});
-    const navigate = useNavigate(); //  para redireccionar al usuario
-    // const [isAuthenticated , setIsAuthenticated] = useState(false);
-    
+    const navigate = useNavigate(); //  para redireccionar al usuario    
     const { setIsAuthenticated } = useContext(CartContext); // para actualizar el estado de autenticación desde carrito
     
 
