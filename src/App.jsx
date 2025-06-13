@@ -13,31 +13,16 @@ import Login from './pages/Login'
 import { CartContext } from './context/CartContext'
 
 function App() {
- const { 
-  handleDeleteFromCart, 
-  handleVaciarCarrito, 
-  handleAddToCart, 
-  cart,
-  productos,
-  cargando,
-  error,
-  precioTotal,
-  actualizarCantidad,
-  isAuthenticated,
-  setIsAuthenticated
-  } = useContext(CartContext);
-
+ const {isAuthenticated} = useContext(CartContext);
 
   return (
     <>
       <Routes>
-        <Route path='/' element={<Home borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} agregarCarrito={handleAddToCart} cart={cart} productos={productos} cargando={cargando} error={error} precioTotal={precioTotal} actualizarCantidad={actualizarCantidad}/>} />
-
-        <Route path='/acercade' element={<AcercaDe borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} cart={cart} precioTotal={precioTotal} actualizarCantidad={actualizarCantidad}/>} />
-        <Route path='/productos' element={<GaleriaDeProductos borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} agregarCarrito={handleAddToCart} cart={cart} productos={productos} cargando={cargando} precioTotal={precioTotal} actualizarCantidad={actualizarCantidad}/>} />
-        <Route path="/productos/:id" element={<DetallesProductos productos={productos}/>} />
-        <Route path='/contacto' element={<Contacto precioTotal={precioTotal} borrarProducto={handleDeleteFromCart} vaciarCarrito={handleVaciarCarrito} cart={cart} actualizarCantidad={actualizarCantidad}/>} />
-        
+        <Route path='/' element={<Home />} />
+        <Route path='/acercade' element={<AcercaDe />} />
+        <Route path='/productos' element={<GaleriaDeProductos />} />
+        <Route path="/productos/:id" element={<DetallesProductos />} />
+        <Route path='/contacto' element={<Contacto />} />
         <Route path="/admin" 
           element={ 
             <RutaProtegida isAuthenticated={isAuthenticated}> 
@@ -45,7 +30,7 @@ function App() {
             </RutaProtegida>
             } 
         />
-        <Route path="/login" element={ <Login setIsAuthenticated={setIsAuthenticated}/> }/>
+        <Route path="/login" element={ <Login /> }/>
         <Route path='/*' element={<NotFound />} />
       </Routes>
     </>

@@ -5,15 +5,18 @@ import ProductList from '../components/ProductList'
 import NotFound from '../pages/NotFound'
 import Spinner from '../components/spinner'
 import '../pages/styles/pages.css'
+import { CartContext } from '../context/CartContext'
+import { useContext } from 'react'
 
 
-function Home({ cart, productos, cargando, agregarCarrito, borrarProducto, vaciarCarrito, error, precioTotal,actualizarCantidad }) {
+function Home() {
+  const { cargando,error } = useContext(CartContext)
   if (error) {
     return <NotFound />
   }
   return (
     <>
-      <Header cartItems={cart} borrarProducto={borrarProducto} vaciarCarrito={vaciarCarrito} precioTotal={precioTotal} agregarCarrito={agregarCarrito} actualizarCantidad={actualizarCantidad}/>
+      <Header />
       <main>
         <section  className="cabecera-section">
           <h1>Home</h1>
@@ -23,7 +26,7 @@ function Home({ cart, productos, cargando, agregarCarrito, borrarProducto, vacia
 
         {
           cargando ? <Spinner size={100} /> :
-            <ProductList cart={cart} productos={productos} agregarCarrito={agregarCarrito} borrarProducto={borrarProducto} vaciarCarrito={vaciarCarrito} />
+            <ProductList />
         }
       </main>
       <Footer />

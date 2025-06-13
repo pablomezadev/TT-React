@@ -3,16 +3,16 @@ import React, { useState } from 'react'
 import './styles/styleProductos.css'
 import { Link } from 'react-router-dom'
 
-const Productos = ({ producto, agregarCarrito, cart }) => {
-  console.log("Productos:", producto.cant);
+const Productos = ({ producto, agregarProducto, cart }) => {
+  console.log("Productos:", producto);
   const [cantidad, setCantidad] = useState(1);
   const [agregado, setAgregado] = useState(false)
   // const increase = ()=>setCantidad(prev=> (prev < producto.rating.count ? prev + 1 : prev));
-  const increase = () => setCantidad(prev => (prev < producto.rating.count ? prev + 1 : prev));
+  const increase = () => setCantidad(prev => (prev < producto.stock ? prev + 1 : prev));
   const decrease = () => setCantidad(prev => (prev > 1 ? prev - 1 : prev));
 
   const handleAgregar = () => {
-    agregarCarrito({ ...producto, cantidad })
+    agregarProducto({ ...producto, cantidad })
     setAgregado(true)
     setTimeout(() => {
       // setAgregado(false)
@@ -32,13 +32,15 @@ const Productos = ({ producto, agregarCarrito, cart }) => {
   return (
     <section className='productoCard'>
       <div className='imgContainer'>
-        <img src={producto.image} alt={producto.title} />
+        <img src={producto.imagen} alt={producto.nombre} />
       </div>
       <h3 className='nombre'>{
-        producto.title.split(" ")[0] + " " + producto.title.split(" ")[1] + " " + producto.title.split(" ")[2]
+        // producto.nombre.split(" ")[0] + " " + producto.nombre.split(" ")[1] + " " + producto.nombre.split(" ")[2]
+        producto.nombre.split(" ")
       }</h3>
-      <p className='price'>$: {producto.price.toFixed(2)}</p>
-      <p className='stock'>stock: {producto.rating.count}</p>
+      {/* <p className='price'>$: {producto.precio.toFixed(2)}</p> */}
+      <p className='price'>$: {producto.precio}</p>
+      <p className='stock'>stock: {producto.stock}</p>
 
       {/* <div className='cantidadContainer'>
         <button className='qtyButton' onClick={decrease}>-</button>
