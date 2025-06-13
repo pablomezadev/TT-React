@@ -25,22 +25,22 @@ a:hover {
 }
 
 /* Layout principal para que el footer quede abajo */
-body {
+/* body {
   margin: 0;
   padding: 0;
   /* min-height: 100vh; */
-  display: flex;
+ /* display: flex;
   flex-direction: column;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   background-color: #ffffff;
   color: #213547;
-}
+} */
 
 #root {
   display: flex;
   flex-direction: column;
   flex: 1;
-  align-items: center;
+  /* align-items: center; */
   min-height: 100vh;
 }
 

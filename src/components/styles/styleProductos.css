@@ -109,7 +109,7 @@
 }
 
 /* Botón agregar al carrito */
-button:last-of-type {
+/* button:last-of-type {
   background-color: #909090;
   color: white;
   border: none;
@@ -119,7 +119,7 @@ button:last-of-type {
   cursor: pointer;
   transition: background-color 0.3s;
   margin-top: auto;
-}
+} */
 
 button:last-of-type:hover {
   background-color: #333;
