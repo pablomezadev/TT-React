@@ -1,14 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Header from '../components/estaticos/Header'
 import Footer from '../components/estaticos/Footer'
 import ProductList from '../components/ProductList'
 import Spinner from '../components/spinner'
 import '../pages/styles/pages.css'
+import { CartContext } from '../context/CartContext'
 
-function GaleriaDeProductos({ cart, productos, cargando, agregarCarrito, borrarProducto, vaciarCarrito, precioTotal, actualizarCantidad}) {
+function GaleriaDeProductos() {
+  const {cargando}=useContext(CartContext)
+
   return (
     <>
-      <Header cartItems={cart} borrarProducto={borrarProducto} vaciarCarrito={vaciarCarrito} precioTotal={precioTotal} actualizarCantidad={actualizarCantidad}/>
+      <Header />
       <main>
         <section className='cabecera-section'>
           <h1>Galería de Productos</h1>
@@ -18,7 +21,7 @@ function GaleriaDeProductos({ cart, productos, cargando, agregarCarrito, borrarP
         </section>
         {
           cargando ? <Spinner /> :
-            <ProductList productos={productos} vaciarCarrito={vaciarCarrito} agregarCarrito={agregarCarrito} borrarProducto={borrarProducto} />
+            <ProductList />
         }
       </main>
       <Footer />

@@ -11,11 +11,15 @@ export const CartProvider = ({ children }) => {
     const [error, setError] = useState(false)
     const [precioTotal, setPrecioTotal] = useState(0)
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isCartOpen, setIsCartOpen] = useState(false);
     // const sumaTotal = () => { return cart.reduce((acc, item) => acc + (item.price * item.cantidad), 0);}
+    const apiUrl = "https://6828d1896075e87073a509a9.mockapi.io/productos-ecommerce/productos"
+
+    const [busqueda, setBusqueda] = useState("")
 
     useEffect(() => {
         // fetch('https://api.escuelajs.co/api/v1/products')
-        fetch('https://fakestoreapi.com/products')
+        fetch(apiUrl)
             .then(respuesta => respuesta.json())
             //logica para manejar los datos
             .then(datos => {
@@ -32,26 +36,20 @@ export const CartProvider = ({ children }) => {
     }, [])
 
     console.log(productos);
-    // console.log("imagenes: "+productos.map(producto => producto.images[0]));
 
-    // const handleAddToCart = (product) => {
-    //   const productInCart = cart.find(item => item.id === product.id);
+    const normalizar = (texto) =>
+        texto?.toLowerCase().replace(/\s/g, ''); // elimina espacios
 
-    //   if (productInCart) {
-    //     setCart(cart.map(item =>
-    //       item.id === product.id ? { ...item, cant: item.cant + 1 } : item
-    //     ));
-    //   } else {
-    //     setCart([...cart, { ...product, cant: 1 }]);
-    //   }
-    // }
+    const productosFiltrados = productos.filter((producto) =>
+        normalizar(producto.nombre).includes(normalizar(busqueda))
+    );
 
     const handleAddToCart = (prod) => {
         const prdExiste = cart.find(item => item.id === prod.id)
         if (prdExiste) {
             if (prod.cantidad >= 1) {
-                alert(`El producto ${prod.title} ya existe en el carrito`)
-                console.log(`el producto ${prod.title} YA fué agregado`)
+                alert(`El producto ${prod.nombre} ya existe en el carrito`)
+                console.log(`el producto ${prod.nombre} YA fué agregado`)
             } else {
                 setCart(cart.map((item) => (
                     item.id === prod.id ? { ...item, cantidad: item.cantidad + prod.cantidad } : item // pruebas
@@ -75,9 +73,6 @@ export const CartProvider = ({ children }) => {
             return prevCart.map(item => {
                 if (item.id === product.id) {
                     if (item.cantidad >= 1) {
-                        //   return { ...item, cantidad: item.cantidad - 1 }
-                        // } else {
-                        //   return null; //si es 1, lo marcamos para eliminarlo
                         return null; //si es 1, lo marcamos para eliminarlo
                     }
                 } else {
@@ -93,7 +88,7 @@ export const CartProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        const total = cart.reduce((acc, item) => acc + (item.price * item.cantidad), 0);
+        const total = cart.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
         setPrecioTotal(total);
     }, [cart]); // se ejecuta automáticamente cuando cambia el carrito
 
@@ -111,7 +106,8 @@ export const CartProvider = ({ children }) => {
         <CartContext.Provider value={
             {
                 cart, productos, cargando, error, precioTotal, isAuthenticated, handleDeleteFromCart
-                , handleVaciarCarrito, cart, productos, cargando, error, precioTotal, setIsAuthenticated, handleAddToCart, actualizarCantidad
+                , handleVaciarCarrito, setIsAuthenticated, handleAddToCart, actualizarCantidad,
+                busqueda, setBusqueda, productosFiltrados, isCartOpen,setIsCartOpen
             }
         }>
             {children}
