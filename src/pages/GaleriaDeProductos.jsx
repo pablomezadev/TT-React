@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import Header from '../components/estaticos/Header'
 import Footer from '../components/estaticos/Footer'
 import ProductList from '../components/ProductList'
-import Spinner from '../components/spinner'
+import Spinner from '../components/Spinner'
 import '../pages/styles/pages.css'
 import { CartContext } from '../context/CartContext'
 
