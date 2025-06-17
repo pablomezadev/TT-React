@@ -3,11 +3,14 @@ import { Link, NavLink } from 'react-router-dom'
 import './styleEstaticos.css'
 import Cart from '../Cart'
 import { CartContext } from '../../context/CartContext';
+// import {aseAuth} from '../../context/AuthContext';
+import { useAuth } from '../../context/AuthContext'
 
 // function Header({ cartItems, borrarProducto, vaciarCarrito, precioTotal, actualizarCantidad }) {
 function Header() {
     // const [isCartOpen, setIsCartOpen] = useState(false);
-    const {cart, isCartOpen, setIsCartOpen} = useContext(CartContext)
+    const { cart, isCartOpen, setIsCartOpen } = useContext(CartContext)
+    const { logOut } = useAuth();
 
     return (
         <header>
@@ -17,13 +20,13 @@ function Header() {
                     <li><Link to='/acercade'>Sobre nosotros</Link></li>
                     <li><Link to='/productos'>Galeria de productos</Link></li>
                     <li><Link to='/contacto'>Contacto</Link></li>
-                    <li className="nav-item">
-                        <NavLink className="link" to="/login">
+                    <li className="nav-item" onClick={() => logOut()}>
+                        <NavLink className="link" to="/login" >
                             <i className="fa-solid fa-right-to-bracket"></i>
                         </NavLink>
                     </li>
-                    <li className="nav-item">
-                        <NavLink className="link" to="/admin">
+                    <li className="nav-item" onClick={() => logOut()}>
+                        <NavLink className="link" to="/admin" >
                             <i className="fa-solid fa-user-tie"></i>
                         </NavLink>
                     </li>

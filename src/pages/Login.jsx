@@ -50,7 +50,7 @@ function Login() {
           />
         </label>
         {/* {errors && <p className="error-msg">{errors.email}</p>} */}
-        {console.log("error password: " + errors.password)}
+        {/* {console.log("error password: " + errors.password)} */}
         {errors.password && (
           <div style={{ color: 'red', fontSize: '0.875rem', marginTop: '0.25rem' }}>
             {errors.password}
