@@ -53,6 +53,7 @@ function Admin() {
                       setIsAuthenticated(false);
                       navigate('/');
                       localStorage.removeItem('isAuthenticated');
+                      localStorage.removeItem('token');
                     }}>
                       <i className="fa-solid fa-right-from-bracket"></i>
                     </button>
