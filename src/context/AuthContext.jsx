@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   const urlApiLogin = "https://services-6hx7.onrender.com/api/auth/login";
 
   // const urlApiProtegida = ""http://localhost:3000/api/auth/protegido"";
-  const urlApiProtegida = "https://services-6hx7.onrender.com/api/auth/login";
+  const urlApiProtegida = "https://services-6hx7.onrender.com/api/auth/protegido";
 
   // const urlApiRegister = "http://localhost:3000/api/auth/register";
   const urlApiRegister = "https://services-6hx7.onrender.com/api/auth/register";
