@@ -12,6 +12,10 @@ export const AdminProvider = ({ children }) => {
     const apiUrl = 'https://6828d1896075e87073a509a9.mockapi.io/productos-ecommerce/productos';
     const [seleccionado, setSeleccionado] = useState(null);
     const [openEditar, setOpenEditar] = useState(false);
+    const [data, setData] = useState(null);
+    const navigate = useNavigate();
+
+
 
     useEffect(() => {
         fetch('https://6828d1896075e87073a509a9.mockapi.io/productos-ecommerce/productos')
@@ -109,11 +113,11 @@ export const AdminProvider = ({ children }) => {
 
     return (
         <AdminContext.Provider value={{
-            actualizarProducto, 
-            seleccionado, 
-            agregarProducto, 
-            openEditar, 
-            open, 
+            actualizarProducto,
+            seleccionado,
+            agregarProducto,
+            openEditar,
+            open,
             setOpen,
             cargando,
             eliminarProducto,
