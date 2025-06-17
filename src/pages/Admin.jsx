@@ -46,7 +46,7 @@ function Admin() {
               <nav>
                 <ul className="nav-admin">
                   <li className="navItem">
-                    <a href="/admin">Admin</a>
+                    <NavLink to="/admin">Admin</NavLink>
                   </li>
                   <li className="navItem">
                     <button className="navButton" onClick={() => {
