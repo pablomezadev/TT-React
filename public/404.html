@@ -2,12 +2,23 @@
 <html>
   <head>
     <meta charset="utf-8">
-<script>
-  // Redirige a la misma ruta dentro de /TT-React
-  location.replace(
-    "/TT-React" + location.pathname.replace(/^\/TT-React/, '') + location.search + location.hash
-  );
-</script>
+    <script>
+      // Solo redirige si no estamos ya en el index.html
+      // y solo si NO venimos de una redirección
+      if (location.pathname !== "/TT-React/" && !location.search.includes("redirected")) {
+        // Quita el /TT-React si ya está al inicio
+        var newPath = "/TT-React" + location.pathname.replace(/^\/TT-React/, '') + location.search + location.hash;
+        // Agrega un query param para evitar loops infinitos
+        if (!newPath.includes("redirected")) {
+          if (newPath.includes("?")) {
+            newPath += "&redirected=true";
+          } else {
+            newPath += "?redirected=true";
+          }
+        }
+        location.replace(newPath);
+      }
+    </script>
   </head>
   <body></body>
 </html>
