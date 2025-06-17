@@ -5,7 +5,7 @@ import FormularioProductos from '../components/FormularioProductos';
 import FormularioEditarProd from '../components/FormularioEditarProd';
 import { AdminContext } from '../context/AdminContext';
 import { CartContext } from '../context/CartContext';
-import Spinner from '../components/spinner'
+import Spinner from '../components/Spinner'
 
 function Admin() {
   const {
