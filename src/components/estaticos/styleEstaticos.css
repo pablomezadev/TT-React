@@ -55,3 +55,9 @@ footer {
   margin-top: 2rem;
   color: #ccc;
 }
+
+.active {
+  font-weight: bold;
+  color: #000000; /* El color que prefieras para activo */
+  /* cualquier otro estilo para el activo */
+}
