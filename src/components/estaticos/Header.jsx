@@ -16,12 +16,13 @@ function Header() {
         <header>
             <nav>
                 <ul>
-                    <li><Link to='/'> Inicio</Link></li>
-                    <li><Link to='/acercade'>Sobre nosotros</Link></li>
-                    <li><Link to='/productos'>Galeria de productos</Link></li>
-                    <li><Link to='/contacto'>Contacto</Link></li>
+                    <li><NavLink to='/'> Inicio</NavLink></li>
+                    <li><NavLink to='/acercade'>Sobre nosotros</NavLink></li>
+                    <li><NavLink to='/productos'>Galeria de productos</NavLink></li>
+                    <li><NavLink to='/contacto'>Contacto</NavLink></li>
                     <li className="nav-item" onClick={() => logOut()}>
-                        <NavLink className="link" to="/login" >
+                        {/* <NavLink className="link" to="/login" > */}
+                        <NavLink className={({ isActive }) => isActive ? "active" : ""} to="/login" >
                             <i className="fa-solid fa-right-to-bracket"></i>
                         </NavLink>
                     </li>
