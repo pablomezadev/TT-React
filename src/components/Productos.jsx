@@ -4,7 +4,7 @@ import './styles/styleProductos.css'
 import { Link } from 'react-router-dom'
 
 const Productos = ({ producto, agregarProducto, cart }) => {
-  console.log("Productos:", producto);
+  // console.log("Productos:", producto);
   const [cantidad, setCantidad] = useState(1);
   const [agregado, setAgregado] = useState(false)
   // const increase = ()=>setCantidad(prev=> (prev < producto.rating.count ? prev + 1 : prev));
