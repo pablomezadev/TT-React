@@ -13,7 +13,7 @@ function Cart() {
     }=useContext(CartContext)
 
     const visibilidadCarrito = isCartOpen ? 'open' : 'close'
-    console.log('valor isCartOpen: ', isCartOpen)
+    // console.log('valor isCartOpen: ', isCartOpen)
     const [cantidadCart, setCantidadCart] = useState(1);
 
 const increase = (item) => item.cantidad < item.stock ? actualizarCantidad(item, item.cantidad + 1) : null;

@@ -1,6 +1,7 @@
 import { createContext, useEffect, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Importamos useNavigate para redireccionar al usuario después de la autenticación
 import { CartContext } from './CartContext'; // Importamos el contexto del carrito para actualizar el estado de autenticación
+import { endpoints } from '../config/apiConfig';
 
 const AuthContext = createContext();
 
@@ -10,14 +11,21 @@ export const AuthProvider = ({ children }) => {
   const [errors, setError] = useState({});
   const navigate = useNavigate(); //  para redireccionar al usuario    
   const { setIsAuthenticated, isAuthenticated } = useContext(CartContext); // para actualizar el estado de autenticación desde carrito
-  // const urlApiLogin = "http://localhost:3000/api/auth/login";
-  const urlApiLogin = "https://services-6hx7.onrender.com/api/auth/login";
+  // // const urlApiLogin = "http://localhost:3000/api/auth/login";
+  // const urlApiLogin = "https://services-6hx7.onrender.com/api/auth/login";
 
-  // const urlApiProtegida = ""http://localhost:3000/api/auth/protegido"";
-  const urlApiProtegida = "https://services-6hx7.onrender.com/api/auth/protegido";
+  // // const urlApiProtegida = "http://localhost:3000/api/auth/protegido";
+  // const urlApiProtegida = "https://services-6hx7.onrender.com/api/auth/protegido";
 
-  // const urlApiRegister = "http://localhost:3000/api/auth/register";
-  const urlApiRegister = "https://services-6hx7.onrender.com/api/auth/register";
+  // // const urlApiRegister = "http://localhost:3000/api/auth/register";
+  // const urlApiRegister = "https://services-6hx7.onrender.com/api/auth/register";
+
+  // // const urlApiLogOut = "http://localhost:3000/api/auth/logout";
+  // const urlApiLogOut = "https://services-6hx7.onrender.com/api/auth/logout";
+  const urlApiLogin = endpoints.login;
+  const urlApiProtegida = endpoints.protegido;
+  const urlApiRegister = endpoints.register;
+  const urlApiLogOut = endpoints.logout;
   const [protectedUserData, setProtectedUserData] = useState({});
   const [user, setUser] = useState(null);
 
@@ -57,18 +65,12 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const verificarSesion = async () => {
-      const token = localStorage.getItem("token");
-
-      if (!token) {
-        setIsAuthenticated(false);
-        return;
-      }
 
       try {
         const res = await fetch(urlApiProtegida, {
           method: "GET",
+          credentials: "include", // habilita credential
           headers: {
-            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
         });
@@ -79,6 +81,7 @@ export const AuthProvider = ({ children }) => {
         console.log("Usuario revalidado:", userData.user);
 
         setIsAuthenticated(true);
+        // setUser(userData.user);
 
         // Redirigir según el rol si estamos en página pública o de login
         const currentPath = window.location.pathname;
@@ -176,6 +179,7 @@ export const AuthProvider = ({ children }) => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include", // habilita credential
         body: JSON.stringify({ email, password }),
         // body: `{"email":${JSON.stringify(email)},"password":${JSON.stringify(password)} }`
       });
@@ -188,21 +192,24 @@ export const AuthProvider = ({ children }) => {
       //   navigate("/admin");
       // }
 
-      if (!res.ok || !data.token) {
+      // if (!res.ok || !data.token) {
+      if (!res.ok) {
         console.log("menesaje: ", data.message)
         setError({ general: data.message || "Credenciales inválidas" });
         return;
       }
 
-      const token = data.token;
-      localStorage.setItem("token", token);
+      // const token = data.token;
+      // localStorage.setItem("token", token);
 
-      console.log("token = ", token)
+      // console.log("token = ", token)
+
       // 2. Usar token para consultar info del usuario
       const userRes = await fetch(urlApiProtegida, {
         method: "GET",
+        credentials: "include",
         headers: {
-          "Authorization": `Bearer ${token}`,
+          // "Authorization": `Bearer ${token}`,
           "Content-Type": "application/json"
         }
       });
@@ -263,16 +270,25 @@ export const AuthProvider = ({ children }) => {
   };
 
   // logout
-  const logOut = ()=> {
+  const logOut = async () => {
     // setIsAuthenticated(false);
     // localStorage.removeItem('isAuthenticated');
     // localStorage.removeItem('token');
 
     // setIsAuthenticated(false);
-    setUser(null);
-    localStorage.removeItem('isAuthenticated');
-    localStorage.removeItem('token');
-    navigate('/login');
+
+    try {
+      await fetch(urlApiLogOut, {
+        method: "POST",
+        credentials: "include",
+      });
+      setUser(null);
+      navigate('/login');
+      setIsAuthenticated(false);
+      localStorage.removeItem('isAuthenticated');
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+    }
   }
 
 
