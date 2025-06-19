@@ -215,8 +215,8 @@ export const AuthProvider = ({ children }) => {
       });
 
       const userData = await userRes.json();
-      console.log("userData.user : ", JSON.stringify(userData.user));
-      console.log("userData.user.rol: ", JSON.stringify(userData.user.rol));
+      // console.log("userData.user : ", JSON.stringify(userData.user));
+      // console.log("userData.user.rol: ", JSON.stringify(userData.user.rol));
 
       if (!userRes.ok) {
         setError({ general: userData.message || "Error al obtener datos del usuario" });
