@@ -35,7 +35,7 @@ export const CartProvider = ({ children }) => {
             })
     }, [])
 
-    console.log(productos);
+    // console.log(productos);
 
     const normalizar = (texto) =>
         texto?.toLowerCase().replace(/\s/g, ''); // elimina espacios

@@ -7,7 +7,7 @@ import { useAuth } from '../context/AuthContext'
 function Login() {
   const { email, setEmail, password, setPassword, errors, handleSubmit } = useAuth();
 
-  console.log("estado de error: " + JSON.stringify(errors))
+  // console.log("estado de error: " + JSON.stringify(errors))
   return (
     <div className="login-container">
       <h2>Iniciar sesión</h2>
