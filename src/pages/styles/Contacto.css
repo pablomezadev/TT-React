@@ -1,0 +1,47 @@
+.contacto-seccion {
+  padding: 3rem 1rem;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.contacto-wrapper {
+  max-width: 720px;
+  width: 100%;
+  background: #ffffff;
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.contacto-titulo {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #212529;
+}
+
+.contacto-descripcion {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.contacto-email {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+.contacto-email a {
+  color: var(--color-primario);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.contacto-email a:hover {
+  text-decoration: underline;
+}

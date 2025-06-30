@@ -3,6 +3,7 @@ const isProduction = import.meta.env.MODE === 'production'; // Es inyectada auto
 const API_BASE_URL = isProduction
   ? 'https://services-6hx7.onrender.com/api/auth'
   : 'http://localhost:3000/api/auth';
+  //:'https://services-6hx7.onrender.com/api/auth'
 
 export const endpoints = {
   login: `${API_BASE_URL}/login`,

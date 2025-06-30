@@ -12,6 +12,34 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+/* sugerencias ia: */
+    --fuente-principal: 'Inter', 'Segoe UI', sans-serif;
+  --color-primario: #007bff;
+  --color-exito: #2d7a39;
+  --color-error: #b00020;
+  --color-fondo-form: #ffffff;
+  --sombra-suave: 0 10px 30px rgba(0, 0, 0, 0.06);
+  --radio: 12px;
+}
+
+/* sugerido por ia: */
+/* html, body {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+} */
+
+
+body {
+  font-family: var(--fuente-principal);
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+}
+
+html{
+  scroll-behavior: smooth;
 }
 
 /* Estilos generales para enlaces */
@@ -40,7 +68,7 @@ a:hover {
   display: flex;
   flex-direction: column;
   flex: 1;
-  /* align-items: center; */
+  align-items: center;
   min-height: 100vh;
 }
 
@@ -49,38 +77,44 @@ main {
   flex: 1; /* Esto empuja al footer hacia abajo */
   width: 100%;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 0rem;
   /* justify-content: center; */
 }
 
 /* Títulos */
 h1 {
-  font-size: 3.2em;
+  /* font-size: 1.6rem; */
   line-height: 1.1;
 }
 
 /* Botones */
 button {
-  border-radius: 8px;
+  /* border-radius: 8px; */
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
+  /* padding: 0.6em 1.2em; */
+  padding: 0.4rem;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  border-radius: 10.9rem transparent;
+  margin: 1rem;
+  /* background-color: #1a1a1a; */
+  /* cursor: pointer; */
+  /* transition: border-color 0.50s; */
 }
 
+/* button:hover {
+  background-color: #cecece;
+  transition: 0.6s;
+} */
+
+/* button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+} */
+
 /* Tema claro opcional */
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
@@ -90,5 +124,63 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+  }
+} */
+
+/* z index global */
+/* z-index utils (puede ir en tu CSS global o en un archivo como utils.css) */
+
+.z-100 {
+  z-index: 100;
+  position: relative;
+}
+
+.z-500 {
+  z-index: 500;
+  position: relative;
+}
+
+.z-800 {
+  z-index: 800;
+  position: relative;
+}
+
+.z-1000 {
+  z-index: 1000;
+  position: relative;
+}
+
+.z-1100 {
+  z-index: 1100;
+  position: relative;
+}
+
+.z-overlay {
+  z-index: 9999;
+  position: fixed;
+}
+
+/* Estilos toastify */
+/* Estilo por defecto del toast */
+.Toastify__toast {
+  font-size: 1rem;
+  padding: 12px 16px;
+}
+
+/* Tamaño más pequeño para pantallas chicas */
+@media (max-width: 480px) {
+  .Toastify__toast {
+    font-size: 0.8rem;
+    padding: 8px 10px;
+    min-height: 50px;
+  }
+
+  .Toastify__toast-body {
+    padding: 4px 0;
+  }
+
+  .Toastify__close-button {
+    font-size: 0.8rem;
+    margin-right: 5px;
   }
 }

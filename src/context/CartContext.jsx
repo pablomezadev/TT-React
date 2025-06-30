@@ -1,5 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 
+import { toast } from 'react-toastify';
+
 // Crear el contexto
 export const CartContext = createContext();
 
@@ -23,8 +25,18 @@ export const CartProvider = ({ children }) => {
             .then(respuesta => respuesta.json())
             //logica para manejar los datos
             .then(datos => {
+
+                const productosNormalizados = datos.map(producto => {
+                    const [entero, decimal = "00"] = String(producto.precio).split(".");
+                    const precioTruncado = `${entero}.${decimal.slice(0, 2).padEnd(2, "0")}`;
+                    return {
+                        ...producto,
+                        precio: precioTruncado // string con máximo 2 decimales, sin redondear
+                    };
+                });
+
                 setTimeout(() => {
-                    setProductos(datos)
+                    setProductos(productosNormalizados)
                     setCargando(false)
                 }, 2000)
             })
@@ -48,13 +60,20 @@ export const CartProvider = ({ children }) => {
         const prdExiste = cart.find(item => item.id === prod.id)
         if (prdExiste) {
             if (prod.cantidad >= 1) {
-                alert(`El producto ${prod.nombre} ya existe en el carrito`)
-                console.log(`el producto ${prod.nombre} YA fué agregado`)
+                toast.error(`El producto: "${prod.nombre.split(" ")[0]}" ya está en el carrito`, {
+                    autoClose: 3000,
+                    position: "top-center"
+                });
             } else {
                 setCart(cart.map((item) => (
                     item.id === prod.id ? { ...item, cantidad: item.cantidad + prod.cantidad } : item // pruebas
                     // item.id === prod.id ? {...item, cantidad : item.cantidad + prod.cantidad }: item
                 )))
+
+                toast.success(`Cantidad actualizada para ${prod.nombre}`, {
+                    autoClose: 2000,
+                    position: "top-center"
+                });
             }
             console.log('Carrito actualizado: ', cart);
             // alert(`el producto ${prod.nombre} ya existe`)
@@ -63,6 +82,11 @@ export const CartProvider = ({ children }) => {
             setCart([...cart, { ...prod, cantidad: prod.cantidad }])
             console.log(`producto agregado: `, prod)
             console.log(`carrito: `, cart)
+
+            toast.success(`Producto agregado: "${prod.nombre.split(" ")[0]}"`, {
+                autoClose: 2000,
+                position: "top-center"
+            });
         }
         console.log('Carrito actualizado: ', cart);
     }
@@ -107,7 +131,7 @@ export const CartProvider = ({ children }) => {
             {
                 cart, productos, cargando, error, precioTotal, isAuthenticated, handleDeleteFromCart
                 , handleVaciarCarrito, setIsAuthenticated, handleAddToCart, actualizarCantidad,
-                busqueda, setBusqueda, productosFiltrados, isCartOpen,setIsCartOpen
+                busqueda, setBusqueda, productosFiltrados, isCartOpen, setIsCartOpen
             }
         }>
             {children}

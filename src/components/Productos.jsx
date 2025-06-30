@@ -1,9 +1,19 @@
 /** Product */
-import React, { useState } from 'react'
-import './styles/styleProductos.css'
+import React, { useState, useContext } from 'react'
+// import './styles/styleProductos.css'
+import './styles/styleProductos2.css'
 import { Link } from 'react-router-dom'
+// import { CartContext } from '../context/CartContext'
+import { CartContext } from '../context/CartContext'
 
-const Productos = ({ producto, agregarProducto, cart }) => {
+// const Productos = ({ producto, agregarProducto, cart }) => {
+const Productos = ({ producto}) => {
+  const {
+    cart, handleAddToCart,
+    busqueda, setBusqueda, productosFiltrados
+  } = useContext(CartContext);
+
+
   // console.log("Productos:", producto);
   const [cantidad, setCantidad] = useState(1);
   const [agregado, setAgregado] = useState(false)
@@ -12,44 +22,45 @@ const Productos = ({ producto, agregarProducto, cart }) => {
   const decrease = () => setCantidad(prev => (prev > 1 ? prev - 1 : prev));
 
   const handleAgregar = () => {
-    agregarProducto({ ...producto, cantidad })
+    // agregarProducto({ ...producto, cantidad })
+    handleAddToCart({ ...producto, cantidad })
     setAgregado(true)
     setTimeout(() => {
       // setAgregado(false)
     }, 3000)
   }
-  const verMasStyle = {
-    backgroundColor: '#6a5acd', // un violeta suave que combina con azul
-    color: 'white',
-    padding: '8px 12px',
-    border: 'none',
-    borderRadius: '6px',
-    marginTop: '0px',
-    cursor: 'pointer',
-    textDecoration: 'none',
-  }
 
   return (
     <section className='productoCard'>
       <div className='imgContainer'>
-        <img src={producto.imagen} alt={producto.nombre} />
+        <Link to={`/productos/${producto.id}`} >
+          <img src={producto.imagen} alt={producto.nombre}
+          // style={{ objectFit:"contain", width: '100%', aspectRatio: '1 / 1', overflow: 'hidden', backgroundColor: '#f9f9f9', maxHeight:"550px" }}
+          />
+        </Link>
       </div>
-      <h3 className='nombre'>{
-        // producto.nombre.split(" ")[0] + " " + producto.nombre.split(" ")[1] + " " + producto.nombre.split(" ")[2]
-        producto.nombre.split(" ")
-      }</h3>
-      {/* <p className='price'>$: {producto.precio.toFixed(2)}</p> */}
-      <p className='price'>$: {producto.precio}</p>
-      <p className='stock'>stock: {producto.stock}</p>
+      <div className='productos-card-footer'>
+        {/* <div className=''> */}
+        <div className="badge-oferta">OFERTA DEL DÍA</div>
+        <h3 className='nombre'>{
+          // producto.nombre.split(" ")[0] + " " + producto.nombre.split(" ")[1] + " " + producto.nombre.split(" ")[2]
+          // producto.nombre.split(" ")
+          producto.nombre
+        }</h3>
+        <i className='fas fa-star' style={{ color: 'blue' }}></i>
+        <i className='fas fa-star' style={{ color: 'blue' }}></i>
+        <i className='fas fa-star' style={{ color: 'blue' }}></i>
+        <i className='fas fa-star' style={{ color: 'blue' }}></i>
+        <i className='fas fa-star' style={{ color: 'blue' }}></i>
 
-      {/* <div className='cantidadContainer'>
-        <button className='qtyButton' onClick={decrease}>-</button>
-        <span>{cantidad}</span>
-        <button className='qtyButton' onClick={increase}>+</button>
-      </div> */}
-      {/* <button onClick={()=>agregarCarrito(producto)}>Agregar al carrito</button> */}
-      <button onClick={handleAgregar}>Agregar al carrito</button>
-      <Link to={`/productos/${producto.id}`} style={verMasStyle}>Ver más</Link>
+
+        <p className='price'>$: {producto.precio}</p>
+        <p className='stock'>stock: {producto.stock}</p>
+
+        {/* <button onClick={()=>agregarCarrito(producto)}>Agregar al carrito</button> */}
+        <button className='productos-button agregar' onClick={handleAgregar}>Agregar al carrito</button>
+        <Link to={`/productos/${producto.id}`} ><button className='productos-button' >Ver más...</button></Link>
+      </div>
     </section>
   )
 }
