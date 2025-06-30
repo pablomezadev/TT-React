@@ -5,7 +5,7 @@ import Cart from "../Cart";
 import LogoIcon from '../icons/LogoIcon';
 import './styleEstaticos.css';
 
-function Header({ isBusador = true }) {
+function NavBarML({ isBusador = true }) {
   const { cart, setIsCartOpen, busqueda, setBusqueda } = useContext(CartContext);
   const [menuAbierto, setMenuAbierto] = useState(false);
 
@@ -108,4 +108,4 @@ function Header({ isBusador = true }) {
   );
 }
 
-export default Header;
+export default NavBarML;

@@ -1,40 +1,60 @@
 import { useContext, useState } from 'react'
 import './styles/styleCart.css'
 import CartIcon from './icons/CartIcon'
-import { Link } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { CartContext } from '../context/CartContext'
 
 // function Cart({ cartItems, isCartOpen, onClose, borrarProducto, vaciarCarrito, precioTotal, actualizarCantidad }) {
 // function Cart({ isCartOpen, onClose }) {
 function Cart() {
     const {
-        cart, handleDeleteFromCart,handleVaciarCarrito,
-        precioTotal,actualizarCantidad,isCartOpen, setIsCartOpen 
-    }=useContext(CartContext)
+        cart, handleDeleteFromCart, handleVaciarCarrito,
+        precioTotal, actualizarCantidad, isCartOpen, setIsCartOpen,isAuthenticated
+    } = useContext(CartContext)
 
     const visibilidadCarrito = isCartOpen ? 'open' : 'close'
-    console.log('valor isCartOpen: ', isCartOpen)
+    // console.log('valor isCartOpen: ', isCartOpen)
     const [cantidadCart, setCantidadCart] = useState(1);
 
-const increase = (item) => item.cantidad < item.stock ? actualizarCantidad(item, item.cantidad + 1) : null;
-const decrease = (item) => item.cantidad > 1 ? actualizarCantidad(item, item.cantidad - 1) : null;
+    const increase = (item) => item.cantidad < item.stock ? actualizarCantidad(item, item.cantidad + 1) : null;
+    const decrease = (item) => item.cantidad > 1 ? actualizarCantidad(item, item.cantidad - 1) : null;
+
+    // Finalizar compra
+    const navigate = useNavigate();
+
+    const handleFinalizarCompra = () => {
+        if (!isAuthenticated) {
+            localStorage.setItem("postLoginRedirect", "/checkout");
+            navigate("/login");
+        } else {
+            navigate("/checkout");
+        }
+    };
+
 
     return (
         // <div className={`cart-overlay-${visibilidadCarrito}`} onClick={onClose}>
-        <div className={`cart-overlay-${visibilidadCarrito}`} onClick={()=>setIsCartOpen(false)}>
-            
-            // <div className={`cart-drawer ${visibilidadCarrito}`} onClick={(e) => e.stopPropagation()}>
+        <div className={`cart-overlay-${visibilidadCarrito}`} onClick={() => setIsCartOpen(false)}>
+
+            <div className={`cart-drawer ${visibilidadCarrito} z-1100`} onClick={(e) => e.stopPropagation()}>
                 <div className='cart-header'>
                     <h2>Carrito</h2>
                     {/* <button onClick={onClose}><li className="fa-solid fa-arrow-left"></li></button> */}
-                    <button onClick={()=>setIsCartOpen(false)}><li className="fa-solid fa-arrow-left"></li></button>
+                    <button onClick={() => setIsCartOpen(false)}><li className="fa-solid fa-arrow-left"></li></button>
 
                 </div>
                 {
                     cart.length === 0 ? (
                         <div className='empty-cart'>
                             {/* <button style={{color:"white"}}><li className="fa-solid fa-cart-shopping" ></li></button> */}
-                            <CartIcon size={120} color="#555" />
+                            {/* <CartIcon size={120} color="#555" /> */}
+                            {/* <>
+                                <i className="fa fa-shopping-cart fa-8x"></i>
+                            </> */}
+                            <span style={{ display: "inline-block", fontSize: "6rem", color: "#000" }}>
+                                <i className="fa fa-shopping-cart"></i>
+                            </span>
+
                             <p style={{ color: 'red' }}><b>Tu carrito está vacio</b></p>
                         </div>) :
                         (
@@ -44,14 +64,16 @@ const decrease = (item) => item.cantidad > 1 ? actualizarCantidad(item, item.can
                                         cart.map((item, index) => (
                                             <>
                                                 <div className='cart-item-container' key={index}>
-                                                    <p style={{color:'black'}}>{item.nombre}</p>
+                                                    {/* <p style={{ color: 'black', alignItems: "left", fontFamily: "cursive" }}>{item.nombre}</p> */}
+                                                    <p style={{ color: 'black', alignItems: "left" }}>{item.nombre}</p>
                                                     <li className='cart-item' key={item.id}>
                                                         <div className='img-item'>
                                                             <img src={item.imagen} alt={item.nombre} />
                                                         </div>
                                                         <div className='item-info'>
                                                             {/* <p>{item.title.split(" ")[0] + " " + item.title.split(" ")[1] + " " + item.title.split(" ")[2]}</p>  */}
-                                                            <b><p> $ {item.precio}</p></b> 
+                                                            {/* <b><p> $ {(item.precio).toFixed(2)}</p></b> */}
+                                                            <b><p> $ {item.precio}</p></b>
                                                             {/* <p>cant: {item.cantidad}</p> */}
                                                         </div>
 
@@ -62,9 +84,9 @@ const decrease = (item) => item.cantidad > 1 ? actualizarCantidad(item, item.can
                                                             <button className='qtyButton' onClick={() => increase(item)}>+</button>
                                                         </div>
                                                         <div className='delete-btn'>
-                                                        <button onClick={() => handleDeleteFromCart(item)} >
-                                                            <li className='fa-solid fa-trash'></li>
-                                                        </button>
+                                                            <button onClick={() => handleDeleteFromCart(item)} >
+                                                                <li className='fa-solid fa-trash'></li>
+                                                            </button>
                                                         </div>
 
                                                     </li>
@@ -82,10 +104,13 @@ const decrease = (item) => item.cantidad > 1 ? actualizarCantidad(item, item.can
                                         <p style={{ color: "black" }}><b>Total: </b></p>
                                     </div>
                                     <div>
+                                        {/* <p style={{ color: "black" }}><b>$ {precioTotal.toFixed(2)}</b> </p> */}
                                         <p style={{ color: "black" }}><b>$ {precioTotal}</b> </p>
                                     </div>
                                 </div>
-                                <Link style={{ backgroundColor: "black", color: "white", height: "6%", fontSize: "1.2rem" }} to="/admin"><button style={{ backgroundColor: "black", color: "white", height: "6%", fontSize: "1.2rem" }}><i class="fa-solid fa-bag-shopping"></i> Finalizar compra</button></Link>
+                                {/* <Link style={{ backgroundColor: "black", color: "white", height: "6%", fontSize: "1.2rem" }} to="/admin"><button style={{ backgroundColor: "black", color: "white", height: "6%", fontSize: "1.2rem" }}><i class="fa-solid fa-bag-shopping"></i> Finalizar compra</button></Link> */}
+                                <button style={{ backgroundColor: "black", color: "white", height: "6%", fontSize: "1.2rem" }} onClick={handleFinalizarCompra()}><i class="fa-solid fa-bag-shopping"></i> Finalizar compra</button>
+                                
                                 {/* <i class="fa-solid fa-bag-shopping"></i> */}
                             </>
                         )

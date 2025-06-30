@@ -1,0 +1,46 @@
+.carousel.slide.carousel-fade {
+  /* background-color: red; */
+  padding: 6px;
+  /* max-height: 1rem; */
+  width: 100%;
+  position: relative;
+  z-index: 50;
+}
+
+.custom-carousel {
+  width: 100%;
+  /* margin: auto; */
+  /* margin-top: 10%; */
+  border-radius: 10px;
+  /* overflow: hidden; */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  /* margin-top: auto; */
+}
+
+.custom-carousel img {
+  object-fit: fill;
+  width: 100%;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-height: 28rem;
+  /* { width: '100%', aspectRatio: '1 / 1', overflow: 'hidden', backgroundColor: 'white', maxHeight:"550px" } */
+}
+
+/* img{
+  position: relative; 
+  z-index: -1.9!important;
+  background-color: yellow;
+  padding: 10px;
+} */
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .custom-carousel img {
+    max-height: 13rem;
+    object-fit: fill;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    /* { width: '100%', aspectRatio: '1 / 1', overflow: 'hidden', backgroundColor: 'white', maxHeight:"550px" } */
+  }
+}

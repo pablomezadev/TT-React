@@ -121,9 +121,9 @@
   margin-top: auto;
 } */
 
-button:last-of-type:hover {
+/* button:last-of-type:hover {
   background-color: #333;
-}
+} */
 
 .productosContainer{
   display: flex;

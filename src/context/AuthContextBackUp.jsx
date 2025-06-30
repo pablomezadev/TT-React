@@ -1,5 +1,5 @@
 import { createContext, useEffect, useContext, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom'; // Importamos useNavigate para redireccionar al usuario después de la autenticación
+import { useNavigate, NavLink } from 'react-router-dom'; // Importamos useNavigate para redireccionar al usuario después de la autenticación
 import { CartContext } from './CartContext'; // Importamos el contexto del carrito para actualizar el estado de autenticación
 import { endpoints } from '../config/apiConfig';
 
@@ -26,7 +26,6 @@ export const AuthProvider = ({ children }) => {
   const urlApiProtegida = endpoints.protegido;
   const urlApiRegister = endpoints.register;
   const urlApiLogOut = endpoints.logout;
-  const urlApiMockUserData = endpoints.mockUserData;
   const [protectedUserData, setProtectedUserData] = useState({});
   const [user, setUser] = useState(null);
 
@@ -64,47 +63,43 @@ export const AuthProvider = ({ children }) => {
 
   // }, []); // Dependencias del useEffect
 
+  useEffect(() => {
+    const verificarSesion = async () => {
 
+      try {
+        const res = await fetch(urlApiProtegida, {
+          method: "GET",
+          credentials: "include", // habilita credential
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
+        if (!res.ok) throw new Error("Token inválido o expirado");
 
-  // VERIFICA SESION AL RECARGAR !! FUNCIONA OK falta pulir para evitar llamados innecesarios
-  // useEffect(() => {
-  //   const verificarSesion = async () => {
+        const userData = await res.json();
+        console.log("Usuario revalidado:", userData.user);
 
-  //     try {
-  //       const res = await fetch(urlApiProtegida, {
-  //         method: "GET",
-  //         credentials: "include", // habilita credential
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       });
+        setIsAuthenticated(true);
+        // setUser(userData.user);
 
-  //       if (!res.ok) throw new Error("Token inválido o expirado");
+        // Redirigir según el rol si estamos en página pública o de login
+        const currentPath = window.location.pathname;
+        if (currentPath === "/login" || currentPath === "/") {
+          if (userData.user.rol === "admin") {
+            navigate("/admin");
+          } else {
+            navigate("/");
+          }
+        }
+      } catch (error) {
+        console.warn("Sesión inválida:", error.message);
+        logOut();
+      }
+    };
 
-  //       const userData = await res.json();
-  //       console.log("Usuario revalidado:", userData.user);
-
-  //       setIsAuthenticated(true);
-  //       // setUser(userData.user);
-
-  //       // Redirigir según el rol si estamos en página pública o de login
-  //       const currentPath = window.location.pathname;
-  //       if (currentPath === "/login" || currentPath === "/") {
-  //         if (userData.user.rol === "admin") {
-  //           navigate("/admin");
-  //         } else {
-  //           navigate("/");
-  //         }
-  //       }
-  //     } catch (error) {
-  //       console.warn("Sesión inválida:", error.message);
-  //       logOut();
-  //     }
-  //   };
-
-  //   verificarSesion();
-  // }, []);
+    verificarSesion();
+  }, []);
 
 
 
@@ -156,41 +151,6 @@ export const AuthProvider = ({ children }) => {
 
 
 
-  // Re validar acceso y obtener datos de usuario:
-  // useEffect(() => {
-  //   if (isAuthenticated && !user) {
-  //     fetchUser();
-  //   }
-  // }, [isAuthenticated, user]);
-
-
-
-  const fetchUser = async () => {
-    try {
-      const res = await fetch(urlApiMockUserData, {
-        method: "GET",
-        credentials: "include"
-      });
-      const users = await res.json();
-      console.log("url res protegida: ", urlApiProtegida)
-      // Buscar usuario logueado por email desde localStorage
-      const emailLogueado = email || localStorage.getItem("email");
-
-      const userFound = users.find((u) => u.email === emailLogueado);
-      console.log("usuario encontrado: ", userFound)
-
-      if (userFound) {
-        setUser(userFound);
-        return userFound;
-      } else {
-        console.warn("Usuario no encontrado en el archivo local");
-        return null;
-      }
-    } catch (err) {
-      console.error("Error al leer el archivo de usuarios:", err);
-      return null;
-    }
-  };
 
 
 
@@ -216,23 +176,20 @@ export const AuthProvider = ({ children }) => {
       // console.log(`{"username":${JSON.stringify(email)},"password":${JSON.stringify(password)} }`)
       const res = await fetch(urlApiLogin, {
         method: "POST",
-        credentials: "include", // habilita credential
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include", // habilita credential
         body: JSON.stringify({ email, password }),
         // body: `{"email":${JSON.stringify(email)},"password":${JSON.stringify(password)} }`
       });
 
       const data = await res.json();
-      console.log("datos login: ", data)
 
       // if (res.ok) {
-      //   // localStorage.setItem("token", data.token);
-      //   setIsAuthenticated(true)
-
+      //   localStorage.setItem("token", data.token);
       //   console.log("respuesta api login: ",res)
-      //   // navigate("/admin");
+      //   navigate("/admin");
       // }
 
       // if (!res.ok || !data.token) {
@@ -242,128 +199,74 @@ export const AuthProvider = ({ children }) => {
         return;
       }
 
+      // const token = data.token;
+      // localStorage.setItem("token", token);
 
-      // Login exitoso
+      // console.log("token = ", token)
+
+      // 2. Usar token para consultar info del usuario
+      const userRes = await fetch(urlApiProtegida, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          // "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
+      });
+
+      const userData = await userRes.json();
+      // console.log("userData.user : ", JSON.stringify(userData.user));
+      // console.log("userData.user.rol: ", JSON.stringify(userData.user.rol));
+
+      if (!userRes.ok) {
+        setError({ general: userData.message || "Error al obtener datos del usuario" });
+        return;
+      }
+
+
+      const rol = userData.user.rol;
+      // console.log("Rol del usuario:", rol);
+
+      // 3. Todo OK → marcar como autenticado y redirigir
       localStorage.setItem("isAuthenticated", "true");
-      localStorage.setItem("email", email);
       setIsAuthenticated(true);
 
+      setUser(userData.user);
 
-      // Esperamos al siguiente ciclo para asegurar que la cookie esté disponible
-      setTimeout(async () => {
-        const userData = await fetchUser();
 
-        if (!userData) {
-          setError({ general: "Error al obtener datos del usuario" });
-          return;
-        }
+      if (rol === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
 
-        setUser(userData);
-        const rol = userData.rol;
-        console.log("navegando según rol.... = ", rol)
-        navigate(rol === "admin" ? "/admin" : "/");
-      }, 0);
+
+      // console.log("data tiene: ", data)
+      // console.log("authContext handleSubmit - isAuthenticated: ", isAuthenticated)
+      // if (res.ok && data.token) {
+      //   console.log("data: ", data)
+      //   localStorage.setItem("token", data.token);
+      //   localStorage.setItem("isAuthenticated", "true"); // ahora sí se detectará
+      //   setIsAuthenticated(true); // útil si querés usar el contexto en otros lados
+
+      //   // reemplazar esto por consulta al back con token desde front
+      //   // y redireccionar segun rol devuelto por el back end
+
+      //   console.log("role: ", data.rol)
+      //   if (data.rol === "admin") {
+      //     navigate("/admin");
+      //   } else {
+      //     navigate("/")
+      //   }
+      // } else {
+      //   navigate("/");
+      //   // setError("Mensaje: ", data.message || "Error al iniciar sesión");
+      //   setError({ general: data.message || "Error al iniciar sesión" });
+
+      // }
     } catch (err) {
-      setError({ general: "Error de red o del servidor" });
+      setError("Error de red o del servidor");
     }
-
-    // if (res.ok) {
-    //   // 1. Autenticación exitosa
-    //   localStorage.setItem("isAuthenticated", true);
-    //   setIsAuthenticated(true);
-
-    //   // 2. Esperar al próximo ciclo del event loop
-    //   setTimeout(async () => {
-    //     const userData = await fetchUser(); // Solo una vez
-
-    //     if (!userData) {
-    //       setError({ general: "Error al obtener datos del usuario" });
-    //       return;
-    //     }
-
-    //     setUser(userData);
-    //     const rol = userData.rol;
-    //     navigate(rol === "admin" ? "/admin" : "/");
-    //   }, 0);
-    // }
-
-
-
-
-
-
-    // const token = data.token;
-    // localStorage.setItem("token", token);
-
-    // console.log("token = ", token)
-
-    console.log("consultando ruta protegida...")
-    // 2. Usar token para consultar info del usuario
-    // const userRes = await fetch(urlApiProtegida, {
-    //   method: "GET",
-    //   credentials: "include",
-    //   headers: {
-    //     // "Authorization": `Bearer ${token}`,
-    //     "Content-Type": "application/json"
-    //   }
-    // });
-
-    // const userData = await userRes.json();
-    // console.log("userData.user : ", JSON.stringify(userData.user));
-    // console.log("userData.user.rol: ", JSON.stringify(userData.user.rol));
-
-    // if (!userRes.ok) {
-    //   setError({ general: userData.message || "Error al obtener datos del usuario" });
-    //   return;
-    // }
-
-
-    // const rol = userData.user.rol;
-    // console.log("Rol del usuario:", rol);
-
-    // 3. Todo OK → marcar como autenticado y redirigir
-    // localStorage.setItem("isAuthenticated", true);
-    // setIsAuthenticated(true);
-
-    // const userData = await userRes.json();
-    // console.log("usuario autenticado: ",JSON.stringify(userData))
-    // setUser(userData.user);
-
-
-    // if (rol === "admin") {
-    //   navigate("/admin");
-    // } else {
-    //   navigate("/");
-    // }
-
-
-    // console.log("data tiene: ", data)
-    // console.log("authContext handleSubmit - isAuthenticated: ", isAuthenticated)
-    // if (res.ok && data.token) {
-    //   console.log("data: ", data)
-    //   localStorage.setItem("token", data.token);
-    //   localStorage.setItem("isAuthenticated", "true"); // ahora sí se detectará
-    //   setIsAuthenticated(true); // útil si querés usar el contexto en otros lados
-
-    //   // reemplazar esto por consulta al back con token desde front
-    //   // y redireccionar segun rol devuelto por el back end
-
-    //   console.log("role: ", data.rol)
-    //   if (data.rol === "admin") {
-    //     navigate("/admin");
-    //   } else {
-    //     navigate("/")
-    //   }
-    // } else {
-    //   navigate("/");
-    //   // setError("Mensaje: ", data.message || "Error al iniciar sesión");
-    //   setError({ general: data.message || "Error al iniciar sesión" });
-
-    // }
-
-    // } catch (err) {
-    //   setError("Error de red o del servidor");
-    // }
   };
 
   // logout
@@ -375,27 +278,18 @@ export const AuthProvider = ({ children }) => {
     // setIsAuthenticated(false);
 
     try {
-      if (localStorage.getItem('isAuthenticated')) {
-        setIsAuthenticated(false)
-        localStorage.removeItem('isAuthenticated');
-        localStorage.removeItem('email');
-        await fetch(urlApiLogOut, {
-          method: "POST",
-          credentials: "include",
-        });
-      }
-      console.log("localStorageGetToken despues de logOut: ", localStorage.getItem('token'))
-
+      await fetch(urlApiLogOut, {
+        method: "POST",
+        credentials: "include",
+      });
       setUser(null);
       // navigate('/login');
-      <NavLink to={"/login"} />;
-      // setIsAuthenticated(false);
-      // localStorage.removeItem('isAuthenticated');
-      localStorage.setItem('isAuthenticated', false);
+      <NavLink to={"/login"}/>;
+      setIsAuthenticated(false);
+      localStorage.removeItem('isAuthenticated');
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
     }
-
   }
 
 
@@ -411,4 +305,4 @@ export const AuthProvider = ({ children }) => {
 // Esto nos permite evitar tener que usar useContext(AuthContext) directamente en cada componente  
 // y hace que el código sea más limpio y fácil de mantener
 // useContext es un hook de React que nos permite acceder al contexto creado con createContext
-export const useAuth = () => useContext(AuthContext); // Hook personalizado para acceder al contexto de autenticación   
+export const useAuth = () => useContext(AuthContext); // Hook personalizado para acceder al contexto de autenticación

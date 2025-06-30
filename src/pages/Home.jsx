@@ -7,29 +7,40 @@ import Spinner from '../components/Spinner'
 import '../pages/styles/pages.css'
 import { CartContext } from '../context/CartContext'
 import { useContext } from 'react'
+import Carrousel from '../components/Carrousel'
+import NavBarML from '../components/estaticos/NavBarML'
+import ScrollFadeIn from '../components/utils/ScrollFadeIn'
 
 
 function Home() {
-  const { cargando,error } = useContext(CartContext)
+  const { cargando, error } = useContext(CartContext)
   if (error) {
     return <NotFound />
   }
   return (
     <>
       <Header />
+      {/* <NavBarML /> */}
       <main>
-        <section  className="cabecera-section">
-          <h1>Home</h1>
-          <p>descripcion de productos</p>
-          <p>Bienvenido a nuestra tienda online. Aquí encontrarás una variedad de productos de alta calidad.</p>
-        </section>
+        <ScrollFadeIn>
+          <section className="cabecera-section" >
+            {/* <h3>Home</h3>
+          <p>Bienvenido a nuestra tienda online. Aquí encontrarás una variedad de productos de alta calidad.</p> */}
+            {/* <ScrollFadeIn> */}
+            <Carrousel />
+            {/* </ScrollFadeIn> */}
+          </section>
 
-        {
-          cargando ? <Spinner size={100} /> :
-            <ProductList />
-        }
+          {
+            cargando ? <Spinner size={100} /> :
+
+              <ProductList />
+
+          }
+        </ScrollFadeIn>
       </main>
       <Footer />
+
     </>
   )
 }
