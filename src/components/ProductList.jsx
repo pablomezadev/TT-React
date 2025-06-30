@@ -13,16 +13,17 @@ const ProductList = () => {
         <>
 
             {/* <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', padding: '20px'}}> */}
-            <label htmlFor="">Buscar Producto</label><br />
+            {/* <label htmlFor="">Buscar Producto</label><br />
             <input type="text"
                 placeholder='Buscar producto...'
                 value={busqueda}
                 onChange={(e) => setBusqueda(e.target.value)}
-            />
+            /> */}
             <section className='productosContainer'>
                 {
                     productosFiltrados.map(producto => (
-                        <Productos key={producto.id} producto={producto} agregarProducto={handleAddToCart} cart={cart} />
+                        // <Productos key={producto.id} producto={producto} agregarProducto={handleAddToCart} cart={cart} />
+                        <Productos key={producto.id} producto={producto} agregarProducto={handleAddToCart} />
                     ))
                 }
             </section>

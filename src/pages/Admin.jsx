@@ -6,6 +6,8 @@ import FormularioEditarProd from '../components/FormularioEditarProd';
 import { AdminContext } from '../context/AdminContext';
 import { CartContext } from '../context/CartContext';
 import Spinner from '../components/Spinner'
+// import { useAuth } from '../../context/AuthContext'
+import { useAuth } from '../context/AuthContext'
 
 function Admin() {
   const {
@@ -21,6 +23,8 @@ function Admin() {
     setOpenEditar,
     setSeleccionado
   } = useContext(AdminContext)
+
+  const { logOut } = useAuth();
 
   const linkStyle = ({ isActive }) =>
     isActive
@@ -49,12 +53,15 @@ function Admin() {
                     <NavLink to="/admin">Admin</NavLink>
                   </li>
                   <li className="navItem">
-                    <button className="navButton" onClick={() => {
-                      setIsAuthenticated(false);
-                      navigate('/');
-                      localStorage.removeItem('isAuthenticated');
-                      localStorage.removeItem('token');
-                    }}>
+                    <button className="navButton"
+                    onClick={() => logOut()} 
+                    // onClick={() => {
+                    //   setIsAuthenticated(false);
+                    //   navigate('/');
+                    //   localStorage.removeItem('isAuthenticated');
+                    //   localStorage.removeItem('token');
+                    // }}
+                    >
                       <i className="fa-solid fa-right-from-bracket"></i>
                     </button>
                   </li>

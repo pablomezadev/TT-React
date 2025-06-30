@@ -1,7 +1,7 @@
-/* estaticos.css */
+estaticos.css
 
 /* --- RESET BÁSICO Y ESTILOS GENERALES --- */
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -14,10 +14,10 @@ footer {
   color: white;
   padding: 1rem 0;
   text-align: center;
-}
+} */
 
 /* --- HEADER / NAV --- */
-header nav ul {
+/* header nav ul {
   list-style: none;
   display: flex;
   justify-content: space-around;
@@ -28,7 +28,6 @@ header nav ul {
 }
 
 header nav ul li a {
-  
   text-decoration: none;
   font-weight: 250;
   font-size: 1.4rem;
@@ -45,6 +44,94 @@ header nav ul li a:hover {
   border-radius: 5px;
   color: #2e2e2e;
   text-decoration: underline;
+} */
+
+/* --- FOOTER --- */
+/* footer {
+  font-size: 0.9rem;
+  background-color: #1e1e2f;
+  padding: 1rem;
+  margin-top: 2rem;
+  color: #ccc;
+} */
+
+/* .active {
+  font-weight: bold;
+  color: #000000; El color para activo */
+  /* cualquier otro estilo para el NavLink activo */
+ /* }  */
+
+ /* estaticos.css */
+
+/* --- RESET BÁSICO Y ESTILOS GENERALES --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header,
+footer {
+  /* position: sticky; */
+  position: relative;
+  top: 0;
+  /* z-index: 100; */
+  width: 99%;
+  background-color: rgb(255, 255, 255);
+  color: white;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+/* --- HEADER / NAV --- */
+header nav ul {
+  align-items: center;
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 0;
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+/* header nav ul li a { */
+li a {
+
+  /* text-decoration: none;
+  font-weight: 250;
+  font-size: 1rem;
+  padding: 0.5rem 1rem; */
+  /* transition: background-color 0.3s ease, color 0.3s ease; */
+
+  position: relative;
+  color: blue;
+
+  transition: transform 0.2s ease-in-out;
+
+  display: inline-block;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 1.1rem;
+  padding: 0.5rem 1rem;
+  color: #2e2e2e;
+  transition: transform 0.3s ease-in-out, font-size 0.3s ease-in-out;
+}
+
+/* header nav ul li a:hover { */
+li a:hover {
+  /* background-color: #e4e4e400;
+  border-radius: 5px;
+  color: #2e2e2e;
+
+  transform: scale(8.05); */
+  /* text-decoration: underline; */
+  background-color: #e4e4e400;
+  border-radius: 5px;
+  color: #2e2e2e;
+  transform: scale(1.08);
+  font-size: 1.08rem;
 }
 
 /* --- FOOTER --- */
@@ -56,8 +143,158 @@ footer {
   color: #ccc;
 }
 
-.active {
+.nav-link.active {
   font-weight: bold;
-  color: #000000; /* El color que prefieras para activo */
-  /* cualquier otro estilo para el activo */
+  color: rgba(0, 0, 255, 0.498);
+  text-decoration: dashed;
+}
+
+/* cominzo busqueda */
+.nav-busqueda {
+  /* background-color: #ffe600; amarillo */
+  /* background-color: #dadada; */
+  background-color: #919191e1;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+
+  /* similar al borde superior morado */
+  /* border-bottom: 2px solid #000000; */
+}
+
+.div-busqueda {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  /* min-width: 800px; */
+  position: relative;
+}
+
+.div-busqueda-cart {
+  width: 99%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.ul-cart {
+  position: relative;
+  justify-content: right;
+}
+
+.search-input {
+  flex: 1;
+  padding: 0.64rem 0.6rem;
+  border: none;
+  border-radius: 4px 0 0 4px;
+  font-size: 16px;
+  outline: none;
+  background-color: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-button {
+  padding: 10px 15px;
+  background-color: #fff;
+  border: none;
+  border-left: 1px solid #ccc;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.search-button:hover {
+  background-color: #f5f5f5;
+}
+
+.search-button .fa-search {
+  color: #333;
+  font-size: 16px;
+}
+
+.fa-solid.fa-cart-shopping {
+  color: #ffffff;
+}
+
+/* navbar bootstrap off canvas */
+/* .navbar { */
+  /* z-index: 1050; Sobre otros elementos */
+  /* z-index: 1050;
+} */
+
+.navbar-toggler {
+  border: none;
+  background-color: transparent;
+  margin-top: 10%;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.cart-icon-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.cart-count {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background-color: white;
+  color: black;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 0.7rem;
+  line-height: 1;
+}
+
+
+/* sugerencia ia inicio */
+
+.menu-lateral-movil {
+  position: fixed;
+  color: #000000;
+  top: 0;
+  left: 0;
+  width: 80%;
+  max-width: 280px;
+  height: 100vh;
+  background-color: white;
+  z-index: 1080;
+  padding: 1.5rem;
+  box-shadow: 3px 0 10px rgba(0, 0, 0, 0.3);
+  animation: slideInLeft 0.3s ease-out;
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.navbar-custom {
+  background-color: #f8f9fa;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1060;
+}
+
+
+/* sugerencia ia fin */
+
+@media (min-width: 769px) {
+  .navbar-toggler {
+    display: none;
+    /* Oculta el botón hamburguesa en pantallas grandes */
+  }
 }

@@ -19,19 +19,16 @@ import { ToastContainer, toast } from 'react-toastify';
 
 
 createRoot(document.getElementById('root')).render(
-  // <BrowserRouter basename="/TT-React">
     <Router >
       <StrictMode>
         <CartProvider>
           <AdminProvider>
             <AuthProvider>
               <App />
-              {/* <ToastContainer /> */}
               <ToastContainer position="bottom-right" />
             </AuthProvider>
           </AdminProvider>
         </CartProvider>
       </StrictMode>
-    </Router>,
-  {/* </BrowserRouter>, */}
+    </Router>
 )
