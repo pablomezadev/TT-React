@@ -1,13 +1,13 @@
 import React from 'react';
-import NavBarML from '../components/estaticos/NavBarML';
 import Footer from '../components/estaticos/Footer';
 import ScrollFadeIn from '../components/utils/ScrollFadeIn'; // asegúrate de importar correctamente
 import LogoIcon from '../components/icons/LogoIcon';
+import Header from '../components/estaticos/Header';
 
 function AcercaDe() {
   return (
     <>
-      <NavBarML isBusador={false} />
+      <Header isBusador={false} />
       <main className="container py-4">
         <ScrollFadeIn>
           <section className="mb-5 text-center">

@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 // import '../components/styles/DetalleProductos2.css';
+import { useFinalizarCompra } from '../hooks/useFinalizarCompra';
 
 function DetalleProducto() {
       const {
@@ -18,6 +19,7 @@ function DetalleProducto() {
 
   const [cantidad, setCantidad] = useState(1);
     const [agregado, setAgregado] = useState(false)
+    const finalizarCompra = useFinalizarCompra();
     // const increase = ()=>setCantidad(prev=> (prev < producto.rating.count ? prev + 1 : prev));
     const increase = () => setCantidad(prev => (prev < product.stock ? prev + 1 : prev));
     const decrease = () => setCantidad(prev => (prev > 1 ? prev - 1 : prev));
@@ -126,9 +128,12 @@ function DetalleProducto() {
             <button className="btn btn-secondary btn-lg" onClick={handleAgregar}>
               <i className="fa-sharp fa-solid fa-cart-shopping me-2"></i>Agregar al carrito
             </button>
-            <button className="btn btn-primary btn-lg">
+            { 
+            cart.length>0 && (
+            <button className="btn btn-primary btn-lg" onClick={finalizarCompra}>
               <i className="fa-solid fa-bag-shopping me-2"></i>Finalizar compra
             </button>
+            )}
             <Link to="/productos" className="btn btn-success btn-lg">
               <i className="fa-solid fa-arrow-left me-2"></i>Seguir comprando
             </Link>

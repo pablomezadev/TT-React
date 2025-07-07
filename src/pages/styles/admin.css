@@ -8,7 +8,8 @@
 /* Contenedor general flexible */
 .adminContainer {
   min-height: 100vh;
-  padding: 2rem 4rem;
+  padding: 1rem 4rem;
+  width: 100%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f9f9f9;
 }
@@ -43,6 +44,21 @@
 
 .navButton:hover {
   color: #f87171;
+}
+
+.addButton{
+  background: none;
+  border: 2px solid green;
+  color: green;
+  border-radius: 6px;
+  cursor: pointer;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
+
+.addButton:hover{
+  font-size: 1.02rem;
+  /* color: #fff; */
 }
 
 /* Título */

@@ -5,7 +5,6 @@ import ProductList from '../components/ProductList'
 import Spinner from '../components/Spinner'
 import '../pages/styles/pages.css'
 import { CartContext } from '../context/CartContext'
-import NavBarML from '../components/estaticos/NavBarML'
 import ScrollFadeIn from '../components/utils/ScrollFadeIn'
 
 function GaleriaDeProductos() {
@@ -13,8 +12,7 @@ function GaleriaDeProductos() {
 
   return (
     <>
-      {/* <Header /> */}
-      <NavBarML/>
+      <Header />
       <main>
         <section className='cabecera-section'>
           {/* <h1>Galería de Productos</h1>

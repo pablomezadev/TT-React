@@ -1,13 +1,20 @@
 import { createContext, useState, useEffect } from "react";
-
 import { toast } from 'react-toastify';
+import { NavLink, useNavigate } from 'react-router-dom'
+import { useAuth } from "./AuthContext";
 
 // Crear el contexto
 export const CartContext = createContext();
 
 // Proveedor del contexto
 export const CartProvider = ({ children }) => {
-    const [cart, setCart] = useState([])
+    // const [cart, setCart] = useState([])
+    const [cart, setCart] = useState(() => {
+        const savedCart = localStorage.getItem('cart');
+        return savedCart ? JSON.parse(savedCart) : [];
+    });
+
+
     const [productos, setProductos] = useState([])
     const [cargando, setCargando] = useState(true)
     const [error, setError] = useState(false)
@@ -16,8 +23,9 @@ export const CartProvider = ({ children }) => {
     const [isCartOpen, setIsCartOpen] = useState(false);
     // const sumaTotal = () => { return cart.reduce((acc, item) => acc + (item.price * item.cantidad), 0);}
     const apiUrl = "https://6828d1896075e87073a509a9.mockapi.io/productos-ecommerce/productos"
-
+    const navigate = useNavigate();
     const [busqueda, setBusqueda] = useState("")
+
 
     useEffect(() => {
         // fetch('https://api.escuelajs.co/api/v1/products')
@@ -69,25 +77,28 @@ export const CartProvider = ({ children }) => {
                     item.id === prod.id ? { ...item, cantidad: item.cantidad + prod.cantidad } : item // pruebas
                     // item.id === prod.id ? {...item, cantidad : item.cantidad + prod.cantidad }: item
                 )))
+                // localStorage.setItem('cart',cart)
 
                 toast.success(`Cantidad actualizada para ${prod.nombre}`, {
                     autoClose: 2000,
                     position: "top-center"
                 });
             }
-            console.log('Carrito actualizado: ', cart);
+            // console.log('Carrito actualizado: ', cart);
             // alert(`el producto ${prod.nombre} ya existe`)
 
         } else {
             setCart([...cart, { ...prod, cantidad: prod.cantidad }])
-            console.log(`producto agregado: `, prod)
-            console.log(`carrito: `, cart)
+            // console.log(`producto agregado: `, prod)
+
+            // localStorage.setItem('cart',cart)
 
             toast.success(`Producto agregado: "${prod.nombre.split(" ")[0]}"`, {
                 autoClose: 2000,
                 position: "top-center"
             });
         }
+        // localStorage.setItem('cart',cart)
         console.log('Carrito actualizado: ', cart);
     }
 
@@ -126,6 +137,18 @@ export const CartProvider = ({ children }) => {
             )
         );
     };
+
+    const clearCart = () => {
+        setCart([])
+        localStorage.removeItem("cart")
+        toast.info('Compra finalizada!')
+    }
+
+    //Actualizamos cart en localStorage:
+    useEffect(() => {
+        localStorage.setItem("cart", JSON.stringify(cart))
+    }, [cart])
+
     return (
         <CartContext.Provider value={
             {

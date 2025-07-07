@@ -1,13 +1,15 @@
 import { useContext } from 'react'
 import './styles/admin.css'
-import { NavLink, useNavigate } from 'react-router-dom';
-import FormularioProductos from '../components/FormularioProductos';
-import FormularioEditarProd from '../components/FormularioEditarProd';
+import { NavLink,Link , useNavigate } from 'react-router-dom';
+// import FormularioProductos from '../components/FormularioProductos';
+import FormularioEditarProd from '../components/admin/FormularioEditarProd';
 import { AdminContext } from '../context/AdminContext';
 import { CartContext } from '../context/CartContext';
 import Spinner from '../components/Spinner'
 // import { useAuth } from '../../context/AuthContext'
 import { useAuth } from '../context/AuthContext'
+// import FormularioAgregarProdModal from '../components/admin/FormularioAgregarProdModal';
+import FormularioAgregarModal from '../components/admin/FormularioAgregarModal'
 
 function Admin() {
   const {
@@ -26,10 +28,10 @@ function Admin() {
 
   const { logOut } = useAuth();
 
-  const linkStyle = ({ isActive }) =>
-    isActive
-      ? { fontWeight: 'bold', color: 'yellow', textDecoration: 'underline' }
-      : undefined;
+  // const linkStyle = ({ isActive }) =>
+  //   isActive
+  //     ? { fontWeight: 'bold', color: 'yellow', textDecoration: 'underline' }
+  //     : undefined;
 
   const navigate = useNavigate()
 
@@ -54,7 +56,7 @@ function Admin() {
                   </li>
                   <li className="navItem">
                     <button className="navButton"
-                    onClick={() => logOut()} 
+                      onClick={() => logOut()}
                     // onClick={() => {
                     //   setIsAuthenticated(false);
                     //   navigate('/');
@@ -70,14 +72,28 @@ function Admin() {
               <h1 className="title">Panel Administrativo</h1>
 
               {/* <button onClick={() => setOpen(true)}>Agregar producto nuevo</button> */}
-              {!open && (
+              {/* {!open && (
                 <button onClick={() => setOpen(true)} >Agregar producto nuevo</button>
+              )} */}
+              {!open && (
+                <button className='addButton' onClick={() => setOpen(true)}>Agregar producto nuevo <i className="fa-solid fa-plus"></i></button>
               )}
-              {open && (<FormularioProductos onAgregar={agregarProducto} onCancelar={handleCancelar} />)}
+              {open && (
+                // <FormularioAgregarProdModal
+                //   onAgregar={agregarProducto}
+                //   onCancelar={handleCancelar}
+                // />
+                // <FormularioAgregarModal/>
+                  <FormularioAgregarModal
+                    onAgregar={agregarProducto}
+                    onCancelar={handleCancelar}
+                  />
+              )}
+
+              {/* {open && (<FormularioProductos onAgregar={agregarProducto} onCancelar={handleCancelar} />)} */}
               {openEditar && (<FormularioEditarProd productoSeleccionado={seleccionado}
                 onActualizarProducto={actualizarProducto} onCancelar={handleCancelar} />)
-              }
-
+                }
 
               <div className="productListContainer">
                 <ul className="list">

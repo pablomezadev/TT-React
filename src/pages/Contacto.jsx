@@ -1,16 +1,16 @@
 import React from 'react';
-import NavBarML from '../components/estaticos/NavBarML';
 import Footer from '../components/estaticos/Footer';
 import Formulario from '../components/Formulario';
 import ScrollFadeIn from '../components/utils/ScrollFadeIn';
 // import '../pages/styles/pages.css';
 
 import './styles/Contacto.css';
+import Header from '../components/estaticos/Header';
 
 function Contacto() {
   return (
     <>
-      <NavBarML isBusador={false}/>
+      <Header isBusador={false}/>
       {/* <ScrollFadeIn> */}
       <main className="container py-4">
         {/* <ScrollFadeIn>
@@ -47,7 +47,7 @@ function Contacto() {
                 Escribinos a nuestro correo o completá el formulario a continuación.
               </p>
               <p className="contacto-email">
-                <strong>Email:</strong> <a href="mailto:contacto@techhouse.com">contacto@techhouse.com</a>
+                <strong>Email:</strong> <a href="mailto:contacto@TT-React.com">contacto@TT-React.com</a>
               </p>
             </ScrollFadeIn>
 

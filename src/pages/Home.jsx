@@ -8,7 +8,6 @@ import '../pages/styles/pages.css'
 import { CartContext } from '../context/CartContext'
 import { useContext } from 'react'
 import Carrousel from '../components/Carrousel'
-import NavBarML from '../components/estaticos/NavBarML'
 import ScrollFadeIn from '../components/utils/ScrollFadeIn'
 
 
@@ -20,7 +19,6 @@ function Home() {
   return (
     <>
       <Header />
-      {/* <NavBarML /> */}
       <main>
         <ScrollFadeIn>
           <section className="cabecera-section" >

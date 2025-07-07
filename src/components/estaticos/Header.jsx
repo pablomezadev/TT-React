@@ -4,9 +4,11 @@ import { CartContext } from "../../context/CartContext";
 import Cart from "../Cart";
 import LogoIcon from '../icons/LogoIcon';
 import './styleEstaticos.css';
+import { useAuth } from '../../context/AuthContext'
 
 function Header({ isBusador = true }) {
   const { cart, setIsCartOpen, busqueda, setBusqueda } = useContext(CartContext);
+  const { logOut, user } = useAuth();
   const [menuAbierto, setMenuAbierto] = useState(false);
 
   return (
@@ -14,7 +16,7 @@ function Header({ isBusador = true }) {
       {/* Header */}
       <div className="nav-busqueda p-2 d-flex justify-content-between align-items-center">
         <LogoIcon />
-        {isBusador&&(
+        {isBusador && (
           <div className="flex-grow-1 mx-3">
             <input
               className="form-control"
@@ -47,9 +49,64 @@ function Header({ isBusador = true }) {
           <NavLink to="/acercade" className="nav-link">Nosotros</NavLink>
           <NavLink to="/productos" className="nav-link">Galería</NavLink>
           <NavLink to="/contacto" className="nav-link">Ayuda</NavLink>
-          <NavLink to="/admin" className="nav-link">
+          {/* <NavLink to="/admin" className="nav-link">
             <i className="fa fa-user-tie"></i>
-          </NavLink>
+          </NavLink> */}
+          {/* {console.log("user: ",user)} */}
+          {user ? (
+            <div className="position-relative d-flex align-items-center">
+              <div
+                className="avatar-wrapper"
+                title={user.email}
+                style={{
+                  width: "32px",
+                  height: "32px",
+                  borderRadius: "50%",
+                  backgroundColor: "#ddd",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontWeight: "bold",
+                  fontSize: "0.9rem",
+                  cursor: "default"
+                }}
+              >
+                {user.email?.charAt(0).toUpperCase() || "U"}
+              </div>
+            </div>
+          ) : (
+            <NavLink to="/admin" className="nav-link">
+              <i className="fa fa-user-tie"></i>
+            </NavLink>
+          )}
+
+
+
+
+          {/* <li className="nav-link">
+            <button
+              className="navButton"
+              onClick={logOut}
+            >
+              <i className="fa-solid fa-right-from-bracket"></i>
+            </button>
+          </li> */}
+
+          {user && (
+            <li className="nav-link" >
+              <button
+                className="navButton"
+                onClick={logOut}
+                title="Cerrar sesión"
+              >
+                <i className="fa-solid fa-right-from-bracket"></i>
+              </button>
+            </li>
+          )}
+
+
+
+
           <span className="nav-link" role="button" onClick={() => setIsCartOpen(true)}>
             <div className="cart-icon-wrapper position-relative">
               <i className="fa fa-shopping-cart"></i>
@@ -94,6 +151,25 @@ function Header({ isBusador = true }) {
                 <i className="fa fa-user-tie me-2" />Login
               </NavLink>
             </li>
+
+            {/* <li className="nav-item">
+              <button className="nav-item"
+                // className="navButton"
+                onClick={logOut}
+              >
+                <i className="fa-solid fa-right-from-bracket"></i>
+              </button>
+            </li> */}
+
+            {user && (
+              <li className="nav-item">
+                <button className="nav-item" onClick={logOut} style={{backgroundColor:"white"}}>
+                  <i className="fa-solid fa-right-from-bracket me-2" />Cerrar sesión
+                </button>
+              </li>
+            )}
+
+
             <li className="nav-item">
               <span className="nav-link" role="button" onClick={() => { setIsCartOpen(true); setMenuAbierto(false); }}>
                 <i className="fa fa-shopping-cart me-2" />Carrito ({cart.length})

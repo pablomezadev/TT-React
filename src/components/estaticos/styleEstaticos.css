@@ -146,8 +146,23 @@ footer {
 .nav-link.active {
   font-weight: bold;
   color: rgba(0, 0, 255, 0.498);
+  color: rgba(0, 0, 255, 0.498);
   text-decoration: dashed;
+
 }
+
+.navButton {
+  background: transparent !important;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
 
 /* cominzo busqueda */
 .nav-busqueda {

@@ -172,7 +172,7 @@ export const AuthProvider = ({ children }) => {
     // Si no hay errores, procedemos con la autenticación
     // consumimos una API o validamos las credenciales desde data/users.json
 
-    try { // 1. Login → obtener token
+    try { // 1. Login -> obtener token
       // console.log(`{"username":${JSON.stringify(email)},"password":${JSON.stringify(password)} }`)
       const res = await fetch(urlApiLogin, {
         method: "POST",
@@ -284,7 +284,7 @@ export const AuthProvider = ({ children }) => {
       });
       setUser(null);
       // navigate('/login');
-      <NavLink to={"/login"}/>;
+      <NavLink to={"/login"} />;
       setIsAuthenticated(false);
       localStorage.removeItem('isAuthenticated');
     } catch (error) {

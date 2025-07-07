@@ -2,11 +2,11 @@
     {
         "email": "admin@example.com",
         "password": "admin123",
-        "role": "admin"
+        "rol": "admin"
     },
     {
         "email": "client@example.com",
         "password": "cliente123",
-        "role": "cliente"
+        "rol": "cliente"
     }
 ]

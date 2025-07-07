@@ -3,14 +3,21 @@ import './styles/styleCart.css'
 import CartIcon from './icons/CartIcon'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { CartContext } from '../context/CartContext'
+import { useAuth } from '../context/AuthContext';
+import { useFinalizarCompra } from '../hooks/useFinalizarCompra';
+import Swal from 'sweetalert2';
+
 
 // function Cart({ cartItems, isCartOpen, onClose, borrarProducto, vaciarCarrito, precioTotal, actualizarCantidad }) {
 // function Cart({ isCartOpen, onClose }) {
 function Cart() {
     const {
         cart, handleDeleteFromCart, handleVaciarCarrito,
-        precioTotal, actualizarCantidad, isCartOpen, setIsCartOpen,isAuthenticated
+        precioTotal, actualizarCantidad, isCartOpen, setIsCartOpen
     } = useContext(CartContext)
+
+    const { isAuthenticated, user } = useAuth();
+    const finalizarCompra = useFinalizarCompra();
 
     const visibilidadCarrito = isCartOpen ? 'open' : 'close'
     // console.log('valor isCartOpen: ', isCartOpen)
@@ -18,18 +25,27 @@ function Cart() {
 
     const increase = (item) => item.cantidad < item.stock ? actualizarCantidad(item, item.cantidad + 1) : null;
     const decrease = (item) => item.cantidad > 1 ? actualizarCantidad(item, item.cantidad - 1) : null;
-
-    // Finalizar compra
     const navigate = useNavigate();
 
-    const handleFinalizarCompra = () => {
-        if (!isAuthenticated) {
-            localStorage.setItem("postLoginRedirect", "/checkout");
-            navigate("/login");
-        } else {
-            navigate("/checkout");
-        }
-    };
+    // const handleFinalizarCompra = () => {
+    //     // Siempre cerramos el carrito
+    //     setIsCartOpen(false);
+
+    //     if (!isAuthenticated) {
+    //         // Guardamos intención de ir a checkout para después del login
+    //         localStorage.setItem('postLoginRedirect', '/checkout');
+    //         navigate('/login');
+    //         return;
+    //     }
+
+    //     if (user?.rol === 'cliente') {
+    //         navigate('/checkout');
+    //     } else {
+    //         // Si es admin y clickea "Finalizar compra", lo redirigimos a admin o le mostramos una alerta
+    //         toast.warn("Los administradores no pueden realizar compras");
+    //         navigate('/admin');
+    //     }
+    // };
 
 
     return (
@@ -61,12 +77,17 @@ function Cart() {
                             <>
                                 <ul className='cart-list'>
                                     {
-                                        cart.map((item, index) => (
-                                            <>
-                                                <div className='cart-item-container' key={index}>
+                                        // cart.map((item, index) => (
+                                        cart.map((item) => (
+                                            <div key={item.id} className='cart-item-wrapper'>
+
+                                                {/* {console.log("item.id: ", item.id)} */}
+                                                {/* <div className='cart-item-container' key={index}> */}
+                                                <div className='cart-item-container' >
+
                                                     {/* <p style={{ color: 'black', alignItems: "left", fontFamily: "cursive" }}>{item.nombre}</p> */}
                                                     <p style={{ color: 'black', alignItems: "left" }}>{item.nombre}</p>
-                                                    <li className='cart-item' key={item.id}>
+                                                    <li className='cart-item' > {/*key={item.id}*/}
                                                         <div className='img-item'>
                                                             <img src={item.imagen} alt={item.nombre} />
                                                         </div>
@@ -84,21 +105,62 @@ function Cart() {
                                                             <button className='qtyButton' onClick={() => increase(item)}>+</button>
                                                         </div>
                                                         <div className='delete-btn'>
-                                                            <button onClick={() => handleDeleteFromCart(item)} >
+                                                            {/* <button onClick={() => handleDeleteFromCart(item)} >
                                                                 <li className='fa-solid fa-trash'></li>
+                                                            </button> */}
+                                                            <button onClick={() => {
+                                                                Swal.fire({
+                                                                title: '¿Eliminar producto?',
+                                                                text: 'Esta acción quitará el producto del carrito',
+                                                                icon: 'warning',
+                                                                showCancelButton: true,
+                                                                confirmButtonColor: '#d33',
+                                                                cancelButtonColor: '#3085d6',
+                                                                confirmButtonText: 'Sí, eliminar',
+                                                                cancelButtonText: 'Cancelar'
+                                                                }).then((result) => {
+                                                                if (result.isConfirmed) {
+                                                                    handleDeleteFromCart(item);
+                                                                    Swal.fire('Eliminado', 'El producto fue eliminado del carrito', 'success');
+                                                                }
+                                                                });
+                                                            }}
+                                                            >
+                                                            <li className='fa-solid fa-trash'></li>
                                                             </button>
                                                         </div>
 
                                                     </li>
 
                                                 </div>
-                                            </>
+                                            </div>
                                         ))
 
                                     }
                                     {/* <button onClick={vaciarCarrito}>Vaciar Carrito</button> */}
                                 </ul>
-                                <button style={{ backgroundColor: "red", color: "white" }} onClick={handleVaciarCarrito}>Vaciar Carrito</button>
+                                {/* <button style={{ backgroundColor: "red", color: "white" }} onClick={handleVaciarCarrito}>Vaciar Carrito</button> */}
+                                    <button style={{ backgroundColor: 'red', color: 'white' }}
+                                        onClick={() => {
+                                            Swal.fire({
+                                            title: '¿Vaciar carrito?',
+                                            text: 'Se eliminarán todos los productos del carrito',
+                                            icon: 'warning',
+                                            showCancelButton: true,
+                                            confirmButtonColor: '#d33',
+                                            cancelButtonColor: '#3085d6',
+                                            confirmButtonText: 'Sí, vaciar',
+                                            cancelButtonText: 'Cancelar'
+                                            }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                handleVaciarCarrito();
+                                                Swal.fire('Carrito vacío', 'Todos los productos fueron eliminados', 'success');
+                                            }
+                                            });
+                                        }}
+                                        >
+                                        Vaciar Carrito
+                                    </button>
                                 <div className='cart-footer'>
                                     <div>
                                         <p style={{ color: "black" }}><b>Total: </b></p>
@@ -109,8 +171,9 @@ function Cart() {
                                     </div>
                                 </div>
                                 {/* <Link style={{ backgroundColor: "black", color: "white", height: "6%", fontSize: "1.2rem" }} to="/admin"><button style={{ backgroundColor: "black", color: "white", height: "6%", fontSize: "1.2rem" }}><i class="fa-solid fa-bag-shopping"></i> Finalizar compra</button></Link> */}
-                                <button style={{ backgroundColor: "black", color: "white", height: "6%", fontSize: "1.2rem" }} onClick={handleFinalizarCompra()}><i class="fa-solid fa-bag-shopping"></i> Finalizar compra</button>
-                                
+                                <button style={{ backgroundColor: "black", color: "white", height: "6%", fontSize: "1.2rem" }} onClick={finalizarCompra}><i className="fa-solid fa-bag-shopping"></i> Finalizar compra</button>
+                                {/* <button style={{ backgroundColor: "black", color: "white", height: "6%", fontSize: "1.2rem" }} ><i class="fa-solid fa-bag-shopping"></i> Finalizar compra</button> */}
+
                                 {/* <i class="fa-solid fa-bag-shopping"></i> */}
                             </>
                         )

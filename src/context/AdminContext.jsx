@@ -1,6 +1,8 @@
 import { createContext, useEffect, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Importamos useNavigate para redireccionar al usuario después de la autenticación
 import { CartContext } from './CartContext'; // Importamos el contexto del carrito para actualizar el estado de autenticación
+import { toast } from 'react-toastify'
+import Swal from 'sweetalert2';
 
 export const AdminContext = createContext();
 
@@ -40,10 +42,12 @@ export const AdminProvider = ({ children }) => {
             const data = await response.json();
             setProductos(data);
         } catch (error) {
-            console.error('Error al cargar los productos:', error);
+            toast.error('Error al cargar los productos:', error)
+            // console.error('Error al cargar los productos:', error);
         }
     }
 
+    //agregar loader
     const agregarProducto = async (producto) => {
 
         try {
@@ -62,7 +66,14 @@ export const AdminProvider = ({ children }) => {
             }
 
             const data = await response.json();
-            alert('Producto : ' + data.nombre + ', fué agregado exitosamente');
+            toast.success('Producto agregado exitosamente',
+             {
+                autoClose: 2000,
+                position: "top-center"
+            });
+            
+            setOpen(false);
+            // alert('Producto : ' + data.nombre + ', fué agregado exitosamente');
             cargarProductos(); // Recargar la lista de productos después de agregar uno nuevo
 
         } catch (error) {
@@ -71,21 +82,44 @@ export const AdminProvider = ({ children }) => {
     }
 
     const eliminarProducto = async (id) => {
-        const confirmarDelete = window.confirm('¿Estás seguro de que deseas eliminar este producto?');
-        if (confirmarDelete) {
-            try {
+    const confirm = await Swal.fire({
+      title: '¿Confirmar eliminación?',
+      text: '¿Deseas eliminiar el producto?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+    });
+
+    if (confirm.isConfirmed) {
+      
+         try {
                 // const response = await fetch(`https://6828d1896075e87073a509a9.mockapi.io/productos-ecommerce/productos/${id}`, {
                 // const response = await fetch(`https://api.escuelajs.co/api/v1/products/${id}`, {
                 const response = await fetch(`${apiUrl}/${id}`, {
                     method: 'DELETE',
                 });
                 if (!response.ok) throw new Error('Error al eliminar el producto');
-                alert('Producto eliminado exitosamente');
+                //  toast.success('Producto eliminado con exito: ',productos[id].nombre);
+                 toast.success('Producto eliminado con exito ',
+                {
+                    autoClose: 2000,
+                    position: "top-center"
+                }
+                 );
+                // alert('Producto eliminado exitosamente');
                 cargarProductos(); // Recargar la lista de productos después de eliminar uno
             } catch (error) {
-                console.error('Error al eliminar el producto:', error);
+                toast.error('Hubo un error al intentar eliminar el producto ',
+                {
+                    autoClose: 2000,
+                    position: "top-center"
+                }
+                 );
+                // console.error('Error al eliminar el producto:', error);
             }
-        }
+    //   Swal.fire('Actualizado', 'El producto fue Actualizado en el itinerario', 'success');
+    }
     }
 
 
@@ -101,7 +135,6 @@ export const AdminProvider = ({ children }) => {
 
             if (!response.ok) throw new Error('Error de servicio al actualizar el producto');
             const data = await response.json();
-            alert('Producto:  ' + data.nombre + ' actualizado exitosamente');
             cargarProductos(); // Recargar la lista de productos después de actualizar uno
             setOpenEditar(false); // Cerrar el formulario de edición
             setSeleccionado(null); // Limpiar el producto seleccionado

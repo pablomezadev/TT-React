@@ -27,7 +27,7 @@ function App() {
         <Route path='/contacto' element={<Contacto />} />
         <Route path="/admin"
           element={
-            <RutaProtegida isAuthenticated={isAuthenticated}>
+            <RutaProtegida isAuthenticated={isAuthenticated} requiredRole="admin">
               <Admin />
             </RutaProtegida>
           }
@@ -36,13 +36,13 @@ function App() {
         <Route
           path="/checkout"
           element={
-            <RutaProtegida isAuthenticated={isAuthenticated}>
+            <RutaProtegida isAuthenticated={isAuthenticated} requiredRole="cliente">
               <Checkout />
             </RutaProtegida>
           }
         />
-
         <Route path="/login" element={<Login />} />
+
         <Route path='/*' element={<NotFound />} />
       </Routes>
     </>
